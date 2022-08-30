@@ -139,7 +139,7 @@ scf_machine:
       scass_type: c8_m16_cpu
       machine_type: c8_m16_cpu
       platform: ali
-      program_id: "10253"
+      program_id: "xxx"
       job_type: indicate # container
       region: default
   resources:
@@ -155,7 +155,7 @@ train_machine:
       scass_type: c8_m16_cpu
       machine_type: c8_m16_cpu
       platform: ali
-      program_id: "10253"
+      program_id: "xxx"
       job_type: indicate
       region: default
 
@@ -165,13 +165,13 @@ dflow_config:
   s3_endpoint: '39.106.93.187:30900'
   _catalog_file_name: dflow
 lebesgue_context_config:
-  username: "591288770@qq.com"
-  password: "12345678a@"
+  username: "xxx"
+  password: "xxx"
   executor: lebesgue_v2
   extra:
     scass_type: c2_m4_cpu
     machine_type: c2_m4_cpu
-    program_id: "10253"
+    program_id: "xxx"
     job_type: indicate
   tag: 'deepks-flow-syf'
 
