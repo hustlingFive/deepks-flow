@@ -1,0 +1,178 @@
+# other settings (these are default, can be omitted)
+cleanup: false # whether to delete slurm and err files
+strict: true # do not allow undefined machine parameters
+
+#paras for abacus
+use_abacus: true # use abacus in scf calculation
+
+# params.yaml
+# this is only part of input settings. 
+# should be used together with systems.yaml and machines.yaml
+
+# auto judge args
+converge:
+  n_iter_max : 5
+  train_curve_wave_max : 0.1
+  
+# directory setting (these are default choices, can be omitted)
+workdir: "."
+share_folder: "share" # folder that stores all other settings
+
+# scf settings, set to false when n_iter = 0 to skip checking
+scf_input: false
+
+
+# train settings, set to false when n_iter = 0 to skip checking
+train_input:
+  # model_args is ignored, since this is used as restart
+  data_args: 
+    batch_size: 16
+    group_batch: 1
+    extra_label: true
+    conv_filter: true
+    conv_name: conv
+  preprocess_args:
+    preshift: false # restarting model already shifted. Will not recompute shift value
+    prescale: false # same as above
+    prefit_ridge: 1e1
+    prefit_trainable: false
+  train_args: 
+    decay_rate: 0.5
+    decay_steps: 1000
+    display_epoch: 100
+    force_factor: 1
+    n_epoch: 5000
+    start_lr: 0.0001
+
+# init settings, these are for DeePHF task
+init_model: false # do not use existing model to restart from
+
+init_scf: True
+
+init_train: # parameters for nn training
+  model_args:
+    hidden_sizes: [100, 100, 100] # neurons in hidden layers
+    output_scale: 100 # the output will be divided by 100 before compare with label
+    use_resnet: true # skip connection
+    actv_fn: mygelu # same as gelu, support force calculation
+  data_args: 
+    batch_size: 16
+    group_batch: 1 # can collect multiple system in one batch
+  preprocess_args:
+    preshift: true # shift the descriptor by its mean
+    prescale: false # scale the descriptor by its variance (can cause convergence problem)
+    prefit_ridge: 1e1 # do a ridge regression as prefitting
+    prefit_trainable: false
+  train_args: 
+    decay_rate: 0.96 # learning rate decay factor
+    decay_steps: 500 # decay the learning rate every this steps
+    display_epoch: 100
+    n_epoch: 5000
+    start_lr: 0.0003
+
+# systems.yaml
+# this is only part of input settings. 
+# should be used together with params.yaml and machines.yaml
+
+# training and testing systems
+systems_train: # can also be files that containing system paths
+  - ../systems/group.0[0-2] # support glob
+
+systems_test: # if empty, use the last system of training set
+  - ../systems/group.03
+
+# scf_abacus.yaml
+scf_abacus:
+  #INPUT args
+  ntype: 2
+  nbands: 8
+  ecutwfc: 50
+  scf_thr: 1e-7
+  scf_nmax: 50
+  dft_functional: "lda"
+  gamma_only: 1
+  cal_force: 1
+  #STRU args ( Here are default STRU args, you can set for each group in  ../systems/group.xx/stru_abacus.yaml )
+  orb_files: ["O_gga_6au_60Ry_2s2p1d.orb", "H_gga_6au_60Ry_2s1p.orb"]
+  pp_files: ["O_ONCV_PBE-1.0.upf", "H_ONCV_PBE-1.0.upf"]
+  proj_file: ["jle.orb"]
+  deepks_descriptor_lmax: 2
+  lattice_constant: 1
+  lattice_vector: [[28, 0, 0], [0, 28, 0], [0, 0, 28]]
+  #cmd args
+  run_cmd : "mpirun"
+  abacus_path: "/root/abacus-develop/build/abacus"
+
+# init_scf_abacus.yaml
+init_scf_abacus:
+  orb_files: ["O_gga_6au_60Ry_2s2p1d.orb", "H_gga_6au_60Ry_2s1p.orb"]
+  pp_files: ["O_ONCV_PBE-1.0.upf", "H_ONCV_PBE-1.0.upf"]
+  proj_file: ["jle.orb"]
+  ntype: 2
+  nbands: 8
+  ecutwfc: 50
+  scf_thr: 1e-7
+  scf_nmax: 50
+  dft_functional: "lda"
+  gamma_only: 1
+  cal_force: 0
+  deepks_descriptor_lmax: 2
+  lattice_constant: 1
+  lattice_vector: [[28, 0, 0], [0, 28, 0], [0, 0, 28]]
+  #cmd args
+  run_cmd : "mpirun"
+  abacus_path: "/root/abacus-develop/build/abacus"
+
+
+# machine.yaml
+
+default_config:
+  template_config:
+    image: 'base_dflow_deepks'
+
+scf_machine:
+  template_config:
+    image: 'abacus-workshop'
+  executor:
+    type: lebesgue_v2
+    extra:
+      scass_type: c8_m16_cpu
+      machine_type: c8_m16_cpu
+      platform: ali
+      program_id: "10253"
+      job_type: indicate # container
+      region: default
+  resources:
+    cpus_per_task: 4
+    group_size: 200
+
+train_machine:
+  template_config:
+    image: 'base_dflow_deepks'
+  executor:
+    type: lebesgue_v2
+    extra:
+      scass_type: c8_m16_cpu
+      machine_type: c8_m16_cpu
+      platform: ali
+      program_id: "10253"
+      job_type: indicate
+      region: default
+
+# bohrium
+dflow_config:
+  host: 'http://39.106.93.187:32746'
+  s3_endpoint: '39.106.93.187:30900'
+  _catalog_file_name: dflow
+lebesgue_context_config:
+  username: "591288770@qq.com"
+  password: "12345678a@"
+  executor: lebesgue_v2
+  extra:
+    scass_type: c2_m4_cpu
+    machine_type: c2_m4_cpu
+    program_id: "10253"
+    job_type: indicate
+  tag: 'deepks-flow-syf'
+
+upload_python_package : "/opt/homebrew/anaconda3/envs/dflow2/lib/python3.9/site-packages/deepks2"
