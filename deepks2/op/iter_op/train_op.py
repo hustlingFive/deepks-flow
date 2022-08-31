@@ -51,7 +51,7 @@ class PrepTrain(OP):
 
         os.mkdir("01.train")
         train = Path("01.train")
-        shutil.copytree(scf, train)
+        shutil.copytree(scf, train, dirs_exist_ok = True)
 
         # make the command
         TRN_CMD = " ".join([
