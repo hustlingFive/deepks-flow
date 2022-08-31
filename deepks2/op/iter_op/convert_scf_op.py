@@ -32,7 +32,6 @@ class ConvertScfAbacus(OP):
             self,
             ip : OPIO,
     ) -> OPIO:
-        print("now in the convert op")
         convert_scf_config = ip["scf_config"]
         n_iter = ip["n_iter"]
         system = ip["system"]
@@ -68,7 +67,6 @@ class ConvertScfAbacus(OP):
         if not no_model:
             convert_scf_config["model_file"]="../../"+CMODEL_FILE
 
-        print(systems_train)
 
         from deepks.iterate.template_abacus import convert_data
 
@@ -81,9 +79,7 @@ class ConvertScfAbacus(OP):
             pp_files=pp_files,
             proj_file=proj_file,
             )
-        
-        print("start")
-    
+            
         convert_data(**convert_scf_config)
 
         os.chdir(cwd)

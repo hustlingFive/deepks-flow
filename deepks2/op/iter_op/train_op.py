@@ -40,7 +40,7 @@ class PrepTrain(OP):
         old_model = ip["model"]
         train_config = ip["train_config"]
         n_iter = ip["n_iter"]
-        restart = True if n_iter == 0 else False
+        restart = False if n_iter == 0 else True
 
         source_arg = "train_input.yaml"
         restart_model = "old_model.pth"
@@ -48,6 +48,10 @@ class PrepTrain(OP):
         PrepTrain.save_yaml(train_config, scf/source_arg)
         if restart:
             shutil.copy(old_model, scf/restart_model)
+
+        os.mkdir("01.train")
+        train = Path("01.train")
+        shutil.copytree(scf, train)
 
         # make the command
         TRN_CMD = " ".join([
@@ -77,7 +81,7 @@ class PrepTrain(OP):
             command += f" -o {save_model}"
 
         op = OPIO({
-            "01_train": scf,
+            "01_train": train,
             "command": command,
         })
         return op

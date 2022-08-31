@@ -91,8 +91,6 @@ class PrepRunScfAbacus(Steps):
             ["%s"%self.inputs.parameters["block_id"], ii + "-{{item}}"]
         )
 
-        print("preprun:",run_config)
-
         self = _prep_run_scf_abacus(
             self, 
             self.step_keys,
@@ -139,10 +137,6 @@ def _prep_run_scf_abacus(
     run_template_config = run_config.pop('template_config')
     prep_executor = init_executor(prep_config.pop('executor'))
     run_executor = init_executor(run_config.pop('executor'))
-
-    print("preprun_inner:",run_config)
-    print("preprun_inner:",run_template_config)
-    print("preprun_inner:",run_executor)
 
     # prepare for parallel scf abacus
     prep_scf_abacus = Step(

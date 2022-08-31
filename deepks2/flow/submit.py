@@ -149,7 +149,6 @@ def workflow_iterate(systems_train=None, systems_test=None,n_iter = 0,
                  default_config = None, converge=None):
     # check share folder contains required data
     # and collect the systems into share folder
-    print(upload_python_package)
     if systems_train is None: # load default training systems
         default_train = os.path.join(share_folder, DEFAULT_TRAIN)
         assert_exist(default_train) # must have training systems.
@@ -164,7 +163,6 @@ def workflow_iterate(systems_train=None, systems_test=None,n_iter = 0,
             systems_test = systems_train[-1]
     systems_test = collect_systems(systems_test, os.path.join(share_folder, SYS_TEST))
 
-    print(systems_train)
     # check share folder contains required yaml file
     # scf_args_name = check_share_folder(scf_input, SCF_ARGS_NAME, share_folder)
     # check required machine parameters
@@ -272,7 +270,6 @@ def workflow_iterate(systems_train=None, systems_test=None,n_iter = 0,
         )
         init_iter_config = dict(init_scf_config,**init_train_config)
 
-    print("initconfig:",init_iter_config)
 
     # deepks
     iter_op = Iterate(
@@ -320,7 +317,6 @@ def submit_iterate(*args, **kwargs):
     # set global config
     from dflow import config, s3_config
     dflow_config = kwargs.get('dflow_config', None)
-    print(dflow_config)
     if dflow_config is not None :
         config["host"] = dflow_config.get('host', None)
         s3_config["endpoint"] = dflow_config.get('s3_endpoint', None)
@@ -337,9 +333,9 @@ def submit_iterate(*args, **kwargs):
     else :
         lebesgue_context = None
 
-    print('config:', config)
-    print('s3_config:',s3_config)
-    print('lebsque context:', lb_context_config)
+    # print('config:', config)
+    # print('s3_config:',s3_config)
+    # print('lebsque context:', lb_context_config)
     # print(wf_config)
 
     deepks_iter = workflow_iterate(*args, **kwargs)

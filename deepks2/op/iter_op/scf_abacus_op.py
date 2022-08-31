@@ -124,7 +124,6 @@ class RunScfAbacus(OP):
             self,
             ip : OPIO,
     ) -> OPIO:
-        print("start")
         cwd = os.getcwd()
 
         task_path = ip["task_path"]
