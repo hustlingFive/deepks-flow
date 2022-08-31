@@ -14,15 +14,9 @@ class ConvertScfAbacus(OP):
     @classmethod
     def get_input_sign(cls):
         return OPIOSign({
-            # "name" : str,
-            # "type_map" : List[str],
-            # "labeled_data" : Artifact(List[Path]),
-            # "iter_data" : Artifact(List[Path]),
             "scf_config" : Union[dict, List[dict]],
             "n_iter": int,
             "stru_file" : Artifact(Path),
-            # "pp_files" : Artifact(List[Path]),
-            # "proj_file" : Artifact(List[Path]),
             "model" : Artifact(Path, optional=True),
             "system" : Artifact(Path),
         })
@@ -31,7 +25,6 @@ class ConvertScfAbacus(OP):
     def get_output_sign(cls):
         return OPIOSign({
             "system" : Artifact(Path),
-            # "convert_log" : Artifact(Path),
         })
 
     @OP.exec_sign_check
@@ -48,9 +41,6 @@ class ConvertScfAbacus(OP):
 
         cwd = os.getcwd()
         os.chdir(system)
-
-        # shutil.copytree(stru_file, system ,dirs_exist_ok = True)
-
 
         CMODEL_FILE = "model.ptg"
         SYS_TRAIN = "systems_train"
@@ -75,9 +65,6 @@ class ConvertScfAbacus(OP):
         orb_files=["../../"+str(os.path.basename(s)) for s in orb_files]
         pp_files=["../../"+str(os.path.basename(s)) for s in pp_files]
         proj_file=["../../"+str(os.path.basename(s)) for s in proj_file]
-        # convert_scf_config["orb_files"]=orb_files
-        # convert_scf_config["pp_files"]=pp_files
-        # convert_scf_config["proj_file"]=proj_file
         if not no_model:
             convert_scf_config["model_file"]="../../"+CMODEL_FILE
 
@@ -93,7 +80,6 @@ class ConvertScfAbacus(OP):
             orb_files=orb_files,
             pp_files=pp_files,
             proj_file=proj_file,
-            # pp_files=pp_files,
             )
         
         print("start")
@@ -104,7 +90,6 @@ class ConvertScfAbacus(OP):
 
         return OPIO({
             "system" : system,
-            # "convert_log" : Artifact(Path),
         })
             
 

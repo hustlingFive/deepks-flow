@@ -4,8 +4,6 @@ import shutil
 import subprocess
 from pathlib import Path
 from typing import Tuple, List, Set, Union
-# from deepks2.utils.run_command import run_command
-# from deepks2.utils.chdir import set_directory
 from dflow.python import (
     OP,
     OPIO,
@@ -102,9 +100,6 @@ class RunTrain(OP):
             "train_config": Union[dict, List[dict]],
             "command": str,
             "n_iter" : int,
-            # "init_model" : Artifact(Path, optional=True),
-            # "init_data" : Artifact(List[Path]),
-            # "iter_data" : Artifact(List[Path]),
         })
 
     @classmethod
@@ -113,8 +108,6 @@ class RunTrain(OP):
             "01_train": Artifact(Path),
             "stop_or_converge": bool,
             "model" : Artifact(Path),
-            # "lcurve" : Artifact(Path),
-            # "log" : Artifact(Path),
         })
 
     @OP.exec_sign_check

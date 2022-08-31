@@ -255,30 +255,6 @@ def _iterblock(
         key = '--'.join(["%s"%block_steps.inputs.parameters["block_id"], "prep-run-train"]),
     )
     block_steps.add(prep_run_train)
-
-    # collect_data = Step(
-    #     name = name + '-collect-data',
-    #     template=PythonOPTemplate(
-    #         collect_data_op,
-    #         output_artifact_archive={
-    #             "iter_data": None
-    #         },
-    #         python_packages = upload_python_package,
-    #         **collect_data_template_config,
-    #     ),
-    #     parameters={
-    #         "name": block_steps.inputs.parameters["block_id"],
-    #         "type_map": block_steps.inputs.parameters["type_map"],
-    #     },
-    #     artifacts={
-    #         "iter_data" : block_steps.inputs.artifacts['iter_data'],
-    #         "labeled_data" : prep_run_fp.outputs.artifacts['labeled_data'],
-    #     },
-    #     key = step_keys['collect-data'],
-    #     executor = collect_data_executor,
-    #     **converge_config,
-    # )
-    # block_steps.add(collect_data)
     
 
     block_steps.outputs.parameters["n_iter"].value_from_parameter= \

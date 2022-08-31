@@ -202,10 +202,7 @@ def _prep_run_scf_abacus(
     scf_abacus_steps.add(run_scf_abacus)
 
     scf_abacus_steps.outputs.artifacts["task_paths"]._from = run_scf_abacus.outputs.artifacts["task_path"]
-    # scf_abacus_steps.outputs.parameters["task_names"] = prep_scf_abacus.outputs.parameters["task_names"]
-    # scf_abacus_steps.outputs.artifacts["models"]._from = run_scf_abacus.outputs.artifacts["model"]
-    # scf_abacus_steps.outputs.artifacts["log_datas"]._from = run_scf_abacus.outputs.artifacts["log_data"]
-    # scf_abacus_steps.outputs.artifacts["log_scfs"]._from = run_scf_abacus.outputs.artifacts["log_scf"]
+
 
     return scf_abacus_steps
 

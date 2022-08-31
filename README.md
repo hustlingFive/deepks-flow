@@ -20,7 +20,7 @@ Before you submit the example, you may regist a [Bohrium](https://bohrium.dp.tec
 
 Now it's time to submit your workflow!
 ```
-deepks iterate base_args.yaml
+deepks2 iterate base_args.yaml
 ```
 You can see the flow on this [website](http://39.106.93.187:32746).
 

@@ -136,14 +136,14 @@ scf_machine:
   executor:
     type: lebesgue_v2
     extra:
-      scass_type: c8_m16_cpu
-      machine_type: c8_m16_cpu
+      scass_type: c4_m8_cpu
+      machine_type: c4_m8_cpu
       platform: ali
       program_id: "xxx"
       job_type: indicate # container
       region: default
   resources:
-    cpus_per_task: 4
+    cpus_per_task: 2
     group_size: 200
 
 train_machine:
@@ -152,8 +152,8 @@ train_machine:
   executor:
     type: lebesgue_v2
     extra:
-      scass_type: c8_m16_cpu
-      machine_type: c8_m16_cpu
+      scass_type: c4_m8_cpu
+      machine_type: c4_m8_cpu
       platform: ali
       program_id: "xxx"
       job_type: indicate

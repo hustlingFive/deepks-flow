@@ -25,7 +25,6 @@ class PrepScfAbacus(OP):
         return OPIOSign({
             "scf_abacus_config" : Union[dict, List[dict]],
             "system" : Artifact(Path),
-            # "stru_file" : Artifact(Path),
         })
 
     @classmethod
@@ -40,11 +39,9 @@ class PrepScfAbacus(OP):
             self,
             ip : OPIO,
     ) -> OPIO:
-        # systems_train = ["./share/systems_train/group.00","./share/systems_train/group.01","./share/systems_train/group.02"]
-        # systems_test = ["./share/systems_test/group.03"]
+
         scf_abacus_config = ip["scf_abacus_config"]
         system = ip["system"]
-        # stru_file = ip["stru_file"]
         SYS_TRAIN = "systems_train"
         SYS_TEST = "systems_test"
         group_size = scf_abacus_config.pop("group_size", 150)
@@ -76,7 +73,6 @@ class PrepScfAbacus(OP):
                     group_name = "train.%s"% str(group_num).zfill(2)
                     task_names.append(group_name)
                     task_paths.append(train_parent/group_name)
-                    # shutil.copytree(stru_file, train_parent/group_name ,dirs_exist_ok = True)
                 shutil.copytree((Path(dir)/this).resolve(),(train_parent/group_name/"ABACUS"/(str(group)+str(this).zfill(4))))
                 counter+=1
 
@@ -91,7 +87,6 @@ class PrepScfAbacus(OP):
                     group_name = "test.%s"% str(group_num).zfill(2)
                     task_names.append(group_name)
                     task_paths.append(test_parent/group_name)
-                    # shutil.copytree(stru_file, test_parent/group_name ,dirs_exist_ok = True)
                 shutil.copytree((Path(dir)/this).resolve(),(test_parent/group_name/"ABACUS"/(str(group)+str(this).zfill(4))))
                 counter+=1
 
@@ -103,20 +98,6 @@ class PrepScfAbacus(OP):
         return op
 
 
-    # def _script_rand_seed(
-    #         self,
-    #         input_dict,
-    # ):
-    #     jtmp = input_dict.copy()
-    #     if jtmp['model']['descriptor']['type'] == 'hybrid':
-    #         for desc in jtmp['model']['descriptor']['list']:
-    #             desc['seed'] = random.randrange(sys.maxsize) % (2**32)
-    #     else:
-    #         jtmp['model']['descriptor']['seed'] = random.randrange(sys.maxsize) % (2**32)
-    #     jtmp['model']['fitting_net']['seed'] = random.randrange(sys.maxsize) % (2**32)
-    #     jtmp['training']['seed'] = random.randrange(sys.maxsize) % (2**32)
-    #     return jtmp
-
 
 
 class RunScfAbacus(OP):
@@ -126,7 +107,6 @@ class RunScfAbacus(OP):
     def get_input_sign(cls):
         return OPIOSign({
             "scf_abacus_config" : Union[dict, List[dict]],
-            # "task_name" : str,
             "task_path" : Artifact(Path),
             "stru_file" : Artifact(Path),
         })
@@ -136,9 +116,7 @@ class RunScfAbacus(OP):
         return OPIOSign({
             "task_path" : Artifact(Path),
             "err" : Artifact(Path),
-            # "log_data" : Artifact(Path),
             "log_scf" : Artifact(Path),
-            # "task_name": str
         })
 
     @OP.exec_sign_check
@@ -153,7 +131,6 @@ class RunScfAbacus(OP):
         scf_abacus_config = ip["scf_abacus_config"]
         run_cmd = scf_abacus_config.pop("run_cmd")
         abacus_path = scf_abacus_config.pop("abacus_path")
-        # resources = scf_abacus_config.pop("resources")
         cpus_per_task = scf_abacus_config.pop("cpus_per_task",3)
 
         outlog="out.log"
@@ -182,29 +159,7 @@ class RunScfAbacus(OP):
             "task_path": task_path,
             "log_scf" : task_path/outlog,
             "err" : task_path/errlog,
-            # "task_name":ip["task_name"]
-            # "labeled_data": work_dir / out_name,
         })
 
 
-#     @staticmethod
-#     def vasp_args():
-#         doc_vasp_cmd = "The command of VASP"
-#         doc_vasp_log = "The log file name of VASP"
-#         doc_vasp_out = "The output dir name of labeled data. In `deepmd/npy` format provided by `dpdata`."
-#         return [
-#             Argument("command", str, optional=True, default='mpirun', doc=doc_vasp_cmd),
-#             Argument("log", str, optional=True, default="log", doc=doc_vasp_log),
-#             Argument("out", str, optional=True, default="out", doc=doc_vasp_out),
-#         ]
 
-#     @staticmethod
-#     def normalize_config(data = {}):
-#         ta = RunScfAbacus.vasp_args()
-#         base = Argument("base", dict, ta)
-#         data = base.normalize_value(data, trim_pattern="_*")
-#         base.check_value(data, strict=True)
-#         return data
-
-    
-# config_args = RunScfAbacus.vasp_args

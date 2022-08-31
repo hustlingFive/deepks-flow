@@ -15,13 +15,8 @@ class GatherStatsScfAbacus(OP):
     @classmethod
     def get_input_sign(cls):
         return OPIOSign({
-            # "name" : str,
-            # "type_map" : List[str],
-            # "labeled_data" : Artifact(List[Path]),
-            # "iter_data" : Artifact(List[Path]),
             "gather_config": Union[dict, List[dict]],
             "task_paths" : Artifact(List[Path]),
-            # "task_names" : List[str],
             "system":Artifact(Path)
         })
 
@@ -38,7 +33,6 @@ class GatherStatsScfAbacus(OP):
     ) -> OPIO:
 
         cwd = os.getcwd()
-        # task_names = ip["task_names"]
         task_paths = ip["task_paths"]
         gather_config = ip["gather_config"]
         system = ip["system"]
@@ -59,9 +53,8 @@ class GatherStatsScfAbacus(OP):
         for path in task_paths:
             sys = SYS_TRAIN if os.path.basename(path).startswith("train") else SYS_TEST
             for ii in os.listdir(path/"ABACUS"):
-                # for ii in os.listdir(task_paths[i]/"ABACUS"):
-                # group = ""
                 id = int(ii[-4:])
+                GatherStatsScfAbacus.updateFile(path/"ABACUS"/ii/"conv", ii, str(id))
                 for dir in os.listdir(sys):
                     if dir.endswith(ii[:-4]):
                         group = dir
@@ -80,11 +73,24 @@ class GatherStatsScfAbacus(OP):
         )
         
         gather_stats_abacus(**gather_config)
+
+        scf_dir = scf_dir.resolve()
         
         os.chdir(cwd)
         return OPIO({
             '00_scf' : scf_dir,
         })
-            
+
+    @staticmethod
+    def updateFile(file,old_str,new_str):
+        file_data = ""
+        with open(file, "r", encoding="utf-8") as f:
+            for line in f:
+                if old_str in line:
+                    line = line.replace(old_str,new_str)
+                file_data += line
+        with open(file,"w",encoding="utf-8") as f:
+            f.write(file_data)
+                
 
 

@@ -5,7 +5,7 @@ try:
     import deepks2
 except ImportError as e:
     sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../")
-from utils.deepks_utils import load_yaml, deep_update
+from deepks2.utils.deepks_utils import load_yaml, deep_update
 
 
 
@@ -68,7 +68,7 @@ def iter_cli(args=None):
     del args.argfile
     argdict.update(vars(args))
     
-    from flow.submit import submit_iterate
+    from deepks2.flow.submit import submit_iterate
     submit_iterate(**argdict)
 
 

@@ -177,19 +177,10 @@ def workflow_iterate(systems_train=None, systems_test=None,n_iter = 0,
 
     # make tasks
     if use_abacus:  #caoyu add 2021-07-22
-        # scf_abacus_name = check_share_folder(scf_abacus, SCF_ARGS_NAME_ABACUS, share_folder)
         scf_abacus = check_arg_dict(scf_abacus, DEFAULT_SCF_ARGS_ABACUS, strict)
-
-        # prep_scf_config = dict(scf_abacus, **default_config)
         scf_config = dict(scf_abacus, **scf_resource)
-        # run_scf_config = dict(scf_abacus, **scf_machine)
-        ######
-        # print("-----prepscfconfig",prep_scf_config)
-        # print("-----runscfconfig",run_scf_config)
         print("1")
         # no_model False
-        # can only input machine config
-        print(scf_machine)
         scf_machine = normalize_step_dict(scf_machine)
         scf_op = PrepRunScfAbacus(
             "prep-run-scf-abacus",
@@ -203,14 +194,8 @@ def workflow_iterate(systems_train=None, systems_test=None,n_iter = 0,
     else:
         raise RuntimeError('unknown input of use_abacus: ', use_abacus)
     print("2")
-    # make train arg yaml
-    # check_share_folder(train_input, TRN_ARGS_NAME, share_folder)
-    # prep_train_config = dict(train_input,**default_config)
-    # run_train_config = dict(converge,**train_machine)
     train_config = dict(train_input, **converge)
 
-    # print("----preptrain",prep_train_config)
-    # print("----runtrain",run_train_config)
     # restart True
     train_machine=normalize_step_dict(train_machine)
     train_op = PrepRunTrain(
@@ -222,10 +207,6 @@ def workflow_iterate(systems_train=None, systems_test=None,n_iter = 0,
         upload_python_package = upload_python_package,
     )
     
-    # convert_conifg = dict(scf_abacus, **default_config)
-    # gather_conifg = dict(scf_abacus, **default_config)
-    # print("----convertconfig",convert_conifg)
-    # print("----gatherconfig",gather_conifg)
     
     print("3")
     iter_block_op = MakeIterBlock(
@@ -239,9 +220,6 @@ def workflow_iterate(systems_train=None, systems_test=None,n_iter = 0,
         upload_python_package=upload_python_package,
     )
     iter_config = dict(scf_config, **train_config)
-    # per_iter = Sequence([scf_step, train_step])
-    # iterate = Iteration(per_iter, n_iter, 
-    #                     workdir=".", record_file=os.path.join(workdir, RECORD))
 
     # make init
     if init_model: # if set true or give str, check share/init/model.pth
@@ -250,15 +228,9 @@ def workflow_iterate(systems_train=None, systems_test=None,n_iter = 0,
         init_scf_machine = (check_arg_dict(init_scf_machine, DEFAULT_SCF_MACHINE, strict)
             if init_scf_machine is not None else scf_machine)
         if use_abacus:  #caoyu add 2021-07-22
-            # init_scf_abacus_name = check_share_folder(init_scf_abacus, INIT_SCF_NAME_ABACUS, share_folder)
             init_scf_abacus = check_arg_dict(init_scf_abacus, DEFAULT_SCF_ARGS_ABACUS, strict)
-
-            # init_prep_scf_config = dict(init_scf_abacus, **default_config)
-            # init_prep_scf_config = dict(init_prep_scf_config, **scf_resource)
-            # init_run_scf_config = dict(init_scf_abacus, **scf_machine)
             init_scf_config = dict(init_scf_abacus,**scf_resource)
             print("2.1")
-            print(init_scf_machine)
             init_scf_machine = normalize_step_dict(init_scf_machine)
             init_scf_op = PrepRunScfAbacus(
                 "init-prep-run-scf-abacus",
@@ -271,12 +243,9 @@ def workflow_iterate(systems_train=None, systems_test=None,n_iter = 0,
         else:
             raise RuntimeError('unknown input of use_abacus: ', use_abacus)
             
-        # init_train_name = check_share_folder(init_train, INIT_TRN_NAME, share_folder)
         init_train_machine = (check_arg_dict(init_train_machine, DEFAULT_SCF_MACHINE, strict)
             if init_train_machine is not None else train_machine)
         
-        # init_prep_train_config = dict(init_train,**default_config)
-        # init_run_train_config = dict(converge,**init_train_machine)
         init_train_config = dict(init_train, **converge)
         print("2.2")
         # restart False
@@ -289,15 +258,7 @@ def workflow_iterate(systems_train=None, systems_test=None,n_iter = 0,
             run_config = init_train_machine,
             upload_python_package = upload_python_package,
         )
-        # train_init = make_train(
-        #     source_train=DATA_TRAIN, source_test=DATA_TEST,
-        #     restart=False, source_model=MODEL_FILE, save_model=MODEL_FILE, 
-        #     source_pbasis=proj_basis, source_arg=init_train_name, 
-        #     workdir=TRN_STEP_DIR, share_folder=share_folder,
-        #     cleanup=cleanup, **train_machine
-        # )
-        # init_convert_conifg = dict(init_scf_abacus, **default_config)
-        # init_gather_conifg = dict(init_scf_abacus, **default_config)
+
         print("2.3")
         init_iter_block_op = MakeIterBlock(
             "init-iter",
@@ -345,13 +306,10 @@ def workflow_iterate(systems_train=None, systems_test=None,n_iter = 0,
             "n_iter" : n_iter,
             "init_iter_config" : init_iter_config,
             "iter_config" : iter_config,
-            # "lmp_config" : lmp_config,
-            # "fp_config" : fp_config,
         },
         artifacts = {
             "stru_file" : upload_artifact(Path(stru_file)),
             "system" : upload_artifact(Path(share_folder)),
-            # "iter_data" : iter_data,
         },
     )
 
