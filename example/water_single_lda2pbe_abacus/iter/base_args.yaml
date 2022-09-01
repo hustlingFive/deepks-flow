@@ -128,7 +128,7 @@ init_scf_abacus:
 
 default_config:
   template_config:
-    image: 'base_dflow_deepks'
+    image: 'base_dflow_deepks_v2'
 
 scf_machine:
   template_config:
@@ -148,7 +148,7 @@ scf_machine:
 
 train_machine:
   template_config:
-    image: 'base_dflow_deepks'
+    image: 'base_dflow_deepks_v2'
   executor:
     type: lebesgue_v2
     extra:
