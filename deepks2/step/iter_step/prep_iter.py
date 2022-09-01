@@ -58,13 +58,8 @@ class MakeIterBlock(Steps):
     ):
         self._input_parameters={
             "block_id" : InputParameter(),
-            # "orb_files" : InputParameter(),
             "n_iter": InputParameter(type=int),
             "config" : InputParameter(),
-            # "convert_config" : InputParameter(),
-            # "gather_config" : InputParameter(),
-            # "conf_selector" : InputParameter(),
-            # "fp_config" : InputParameter(),
         }
         self._input_artifacts={
             "stru_file" : InputArtifact(),
@@ -79,7 +74,6 @@ class MakeIterBlock(Steps):
             "model": OutputArtifact(),
             "00_scf" : OutputArtifact(),
             "01_train" : OutputArtifact(),
-            # "trajs" : OutputArtifact(),
         }
         
         super().__init__(

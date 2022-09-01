@@ -1,4 +1,4 @@
-import os
+import os, sys
 import yaml
 import shutil
 import subprocess
@@ -42,10 +42,24 @@ class PrepTrain(OP):
         n_iter = ip["n_iter"]
         restart = False if n_iter == 0 else True
 
-        source_arg = "train_input.yaml"
         restart_model = "old_model.pth"
+        arg_file = "train_input.yaml"
+        save_model = "model.pth"
+        data_train = "data_train"
+        data_test = "data_test"
+        group_data = False
 
-        PrepTrain.save_yaml(train_config, scf/source_arg)
+        DEFAULT_TRAIN_ARGS = {
+            "model_args":None, 
+            "data_args":None, 
+            "preprocess_args":None, 
+            "train_args":None, 
+            "fit_elem":False,
+        }
+
+        train_config = PrepTrain.check_arg_dict(train_config, DEFAULT_TRAIN_ARGS, strict=True)
+
+        PrepTrain.save_yaml(train_config, scf/arg_file)
         if restart:
             shutil.copy(old_model, scf/restart_model)
 
@@ -59,12 +73,6 @@ class PrepTrain(OP):
             "-m deepks.model.train"
             # os.path.join(QCDIR, "train/train.py") # this is the backup choice
         ])
-
-        arg_file = "train_input.yaml"
-        save_model = "model.pth"
-        data_train = "data_train"
-        data_test = "data_test"
-        group_data = False
 
         # set up basic args
         command = TRN_CMD.format(python="python")
@@ -93,6 +101,20 @@ class PrepTrain(OP):
             os.makedirs(dirname)
         with open(file_path, 'w') as fp:
             yaml.safe_dump(data, fp)
+
+    @staticmethod
+    def check_arg_dict(data, default, strict=True):
+        if data is None:
+            data = {}
+        allowed = {k:v for k,v in data.items() if k in default}
+        outside = {k:v for k,v in data.items() if k not in default}
+        if outside:
+            print(f"following ars are not in the default list: {list(outside.keys())}"
+                  +"and would be discarded" if strict else "but kept", file=sys.stderr)
+        if strict:
+            return {**default, **allowed}
+        else:
+            return {**default, **data}
 
 
 class RunTrain(OP):

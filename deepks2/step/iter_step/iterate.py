@@ -66,11 +66,11 @@ class MakeBlockId(OP):
     
     @staticmethod
     def get_block_id(n_iter_now):
-            if n_iter_now == 0:
-                dir = "iter.init"
-            else:
-                dir = "iter.%s" % str(n_iter_now-1).zfill(2)
-            return dir
+        if n_iter_now == 0:
+            dir = "iter.init"
+        else:
+            dir = "iter.%s" % str(n_iter_now-1).zfill(2)
+        return dir
 
 
 class ManageBlock(Steps):

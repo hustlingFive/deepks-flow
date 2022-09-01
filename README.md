@@ -6,7 +6,12 @@ Considering your python environment, maybe you should install some python packag
 ```
 pip install -r requirements.txt
 ```
-Then, install the deepks2, which is a DeePKS + ABACUS iteration workflow which using dflow.
+We need to build the latest version of `dflow`.
+(Bug fixed at 2022.9.1, maybe do not need do this step after they upload the latest version to pip.)  
+```
+pip install git+https://github.com/deepmodeling/dflow
+```
+Then, install the deepks2, which is a DeePKS + ABACUS iteration workflow using dflow.
 ```
 pip install .
 cd ./example/water_single_lda2pbe_abacus/iter
