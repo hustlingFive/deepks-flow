@@ -190,7 +190,7 @@ def _prep_run_scf_abacus(
         with_param=argo_range(argo_len(prep_scf_abacus.outputs.parameters["task_names"])),
         key = step_keys['run-scf-abacus'],
         executor = run_executor,
-        util_image="base_dflow_deepks",
+        util_image="base_dflow_deepks_v2",
         **run_config,
     )
     scf_abacus_steps.add(run_scf_abacus)
