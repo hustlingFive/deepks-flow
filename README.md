@@ -1,5 +1,16 @@
 # Workflow which using dflow for DeePKS + ABACUS iteration
 
+## Introduction
+I am glad to participate in the [Hackathon](https://github.com/deepmodeling-activity/hackathon2022) activity in AI-assisted electronic structure calculations topic and have done this job with a minimum version, which I call deepks-flow.
+
+This is a workflow which using [dflow](https://github.com/deepmodeling/dflow) for [DeePKS](https://github.com/deepmodeling/deepks-kit) + [ABACUS](https://github.com/deepmodeling/abacus-develop) iteration. This [iteration](https://arxiv.org/abs/2206.10093) can build a bridge between expensive Quantum Mechanical Models and Machine Learning Potentials, which will sinificant decrease the cost of high-level $ab$ $initio$ calculation.
+
+<div align=center>
+<img src="./image/2022-09-06-20-31-27.png" width="700">
+</div>
+
+The outline of this work comes from [DPGEN2](https://github.com/deepmodeling/dpgen2), which is a well known work of Han Wang. Most of the functions in OP will call deepks package, so the deepks-flow is just a workflow. The code is not strong enough that I still have much to do for this project. Hopefully, I could grow up with the DeepModeling Community.
+
 ## Running this project
 Considering your python environment, maybe you should install some python package first.
 
@@ -7,7 +18,7 @@ Considering your python environment, maybe you should install some python packag
 pip install -r requirements.txt
 ```
 We need to build the latest version of `dflow`.
-(Bug fixed at 2022.9.1, maybe do not need do this step after they upload the latest version to pip.)  
+(This step added at 2022.9.1, maybe do not need do this after they upload the latest version to pip.)  
 ```
 pip install git+https://github.com/deepmodeling/dflow
 ```

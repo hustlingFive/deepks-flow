@@ -1,5 +1,7 @@
 # Example for water (LDA to PBE) : using ABACUS in scf iteration
 
+**This is a guide of [deepks](https://github.com/deepmodeling/deepks-kit). Cause this example have been modified for the workflow, not everything here is correct. But you can get some information for your reference.**
+
 This is an example on how to use `deepks` library to train a **LDA-to-PBE** model for water molecules, with SCF calculation done by **[ABACUS](https://github.com/deepmodeling/abacus-develop)**. 
 
 The sub-folders are grouped as following:
