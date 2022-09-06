@@ -73,8 +73,6 @@ class GatherStatsScfAbacus(OP):
         )
         
         gather_stats_abacus(**gather_config)
-
-        # scf_dir = scf_dir.resolve()
         
         os.chdir(cwd)
         return OPIO({

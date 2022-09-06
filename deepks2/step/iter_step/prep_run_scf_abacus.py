@@ -22,9 +22,6 @@ from dflow.python import(
     Artifact,
     Slices,
 )
-# from deepks2.constants import (
-#     train_index_pattern,
-# )
 from deepks2.utils.step_config import normalize as normalize_step_dict
 from deepks2.utils.step_config import init_executor
 
@@ -48,24 +45,18 @@ class PrepRunScfAbacus(Steps):
     ):
         self._input_parameters = {
             "block_id" : InputParameter(type=str, value=""),
-            # "numb_models": InputParameter(type=int),
+            "n_iter": InputParameter(type=int),
             "scf_abacus_config" : InputParameter(),
         }        
         self._input_artifacts = {
-            # "init_models" : InputArtifact(optional=True),
+            "model" : InputArtifact(optional=True),
             "system" : InputArtifact(),
             "stru_file" : InputArtifact(),
-            # "iter_data" : InputArtifact(),
         }
         self._output_parameters = {
-            # "task_names":OutputParameter()
         }
         self._output_artifacts = {
-            # "errs": OutputArtifact(),
-            # "log_datas": OutputArtifact(),
-            # "log_scfs": OutputArtifact(),
             "task_paths": OutputArtifact(),
-            # "lcurves": OutputArtifact(),
         }
 
         super().__init__(        
@@ -75,7 +66,6 @@ class PrepRunScfAbacus(Steps):
                 artifacts=self._input_artifacts,
             ),
             outputs=Outputs(
-                # parameters=self._output_parameters,
                 artifacts=self._output_artifacts,
             ),
         )
@@ -143,19 +133,14 @@ def _prep_run_scf_abacus(
         'prep-scf-abacus',
         template=PythonOPTemplate(
             prep_scf_abacus_op,
-            # output_artifact_archive={
-            #     "task_paths": None
-            # },
             python_packages = upload_python_package,
             **prep_template_config,
         ),
         parameters={
             "scf_abacus_config": scf_abacus_steps.inputs.parameters['scf_abacus_config'],
-            # "template_script": scf_abacus_steps.inputs.parameters['template_script'],
         },
         artifacts={
             "system":scf_abacus_steps.inputs.artifacts['system'],
-            # "stru_file":scf_abacus_steps.inputs.artifacts['stru_file']
         },
         key = step_keys['prep-scf-abacus'],
         executor = prep_executor,
@@ -169,9 +154,7 @@ def _prep_run_scf_abacus(
             run_scf_abacus_op,
             slices = Slices(
                 "{{item}}",
-                # input_parameter = ["task_name"],
                 input_artifact = ["task_path"],
-                # output_parameter=["task_name"],
                 output_artifact = ["task_path"],
             ),
             python_packages = upload_python_package,
@@ -179,14 +162,13 @@ def _prep_run_scf_abacus(
         ),
         parameters={
             "scf_abacus_config" : scf_abacus_steps.inputs.parameters['scf_abacus_config'],
-            # "task_name" : prep_scf_abacus.outputs.parameters["task_names"],
+            "n_iter" : scf_abacus_steps.inputs.parameters["n_iter"],
         },
         artifacts={
             'task_path' : prep_scf_abacus.outputs.artifacts['task_paths'],
             "stru_file" : scf_abacus_steps.inputs.artifacts["stru_file"],
+            "model" : scf_abacus_steps.inputs.artifacts["model"],
         },
-        # with_sequence=argo_sequence(argo_len(prep_scf_abacus.outputs.parameters["task_names"]), format=scf_abacus_index_pattern),
-        # with_param=argo_range(scf_abacus_steps.inputs.parameters["numb_models"]),
         with_param=argo_range(argo_len(prep_scf_abacus.outputs.parameters["task_names"])),
         key = step_keys['run-scf-abacus'],
         executor = run_executor,

@@ -22,9 +22,6 @@ from dflow.python import(
     Artifact,
     Slices,
 )
-# from deepks2.constants import (
-#     train_index_pattern,
-# )
 from deepks2.utils.step_config import normalize as normalize_step_dict
 from deepks2.utils.step_config import init_executor
 
@@ -50,24 +47,16 @@ class PrepRunTrain(Steps):
             "block_id" : InputParameter(type=str, value=""),
             "train_config" : InputParameter(),
             "n_iter" : InputParameter(type=int),
-            # "numb_models": InputParameter(type=int),
-            # "template_script" : InputParameter(),
-            # "train_config" : InputParameter(),
         }        
         self._input_artifacts = {
             "00_scf" : InputArtifact(),
             "model":InputArtifact(optional=True)
-            # "init_data" : InputArtifact(),
-            # "iter_data" : InputArtifact(),
         }
         self._output_parameters = {
             "stop_or_converge": OutputParameter(type=bool)
         }
         self._output_artifacts = {
             "01_train": OutputArtifact(),
-            # "log_train": OutputArtifact(),
-            # "log_test": OutputArtifact(),
-            # "test_out": OutputArtifact(),
             "model": OutputArtifact(),
         }
 
@@ -154,7 +143,6 @@ def _prep_run_train(
         parameters={
             "train_config": train_steps.inputs.parameters["train_config"],
             "n_iter": train_steps.inputs.parameters["n_iter"]
-            # "template_script": train_steps.inputs.parameters['template_script'],
         },
         artifacts={
             "00_scf": train_steps.inputs.artifacts['00_scf'],
@@ -173,12 +161,6 @@ def _prep_run_train(
             output_artifact_archive={
                 "01_train": None ,
             },
-            # slices = Slices(
-            #     "int('{{item}}')",
-            #     input_parameter = ["task_name"],
-            #     input_artifact = ["task_path", "init_model"],
-            #     output_artifact = ["model", "lcurve", "log", "script"],
-            # ),
             python_packages = upload_python_package,
             **run_template_config,
         ),
@@ -186,16 +168,10 @@ def _prep_run_train(
             "train_config" : train_steps.inputs.parameters["train_config"],
             "n_iter" : train_steps.inputs.parameters["n_iter"],
             "command":prep_train.outputs.parameters["command"],
-            # "task_name" : prep_train.outputs.parameters["task_names"],
         },
         artifacts={
             '01_train' : prep_train.outputs.artifacts['01_train'],
-            # "init_model" : train_steps.inputs.artifacts['init_models'],
-            # "init_data": train_steps.inputs.artifacts['init_data'],
-            # "iter_data": train_steps.inputs.artifacts['iter_data'],
         },
-        # with_sequence=argo_sequence(argo_len(prep_train.outputs.parameters["task_names"]), format=train_index_pattern),
-        # with_param=argo_range(train_steps.inputs.parameters["numb_models"]),
         key = step_keys['run-train'],
         executor = run_executor,
         **run_config,

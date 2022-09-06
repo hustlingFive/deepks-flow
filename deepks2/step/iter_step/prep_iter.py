@@ -31,12 +31,6 @@ from typing import (
     List
 )
 from pathlib import Path
-# from dpgen2.exploration.scheduler import ExplorationScheduler
-# from dpgen2.exploration.report import ExplorationReport
-# from dpgen2.exploration.task import ExplorationTaskGroup
-# from dpgen2.exploration.selector import ConfSelector
-# from dpgen2.superop.block import ConcurrentLearningBlock
-
 from deepks2.utils.step_config import normalize as normalize_step_dict
 from deepks2.utils.step_config import init_executor
 
@@ -111,7 +105,6 @@ class MakeIterBlock(Steps):
             scf_op,
             gather_stats_scf_op,
             train_op,
-            # collect_data_op,
             convert_config = convert_config,
             gather_config = gather_config,
             upload_python_package = upload_python_package,
@@ -163,7 +156,6 @@ def _iterblock(
             convert_scf_op,
             output_artifact_archive={
                 "system": None,
-                # "convert_log": None
             },
             python_packages = upload_python_package,
             **convert_scf_template_config,
@@ -171,14 +163,11 @@ def _iterblock(
         parameters={
             "n_iter": block_steps.inputs.parameters['n_iter'],
             "scf_config" : block_steps.inputs.parameters['config'],
-            # "type_map": block_steps.inputs.parameters["type_map"],
-            # "traj_fmt": 'lammps/dump',
         },
         artifacts={
             "stru_file" : block_steps.inputs.artifacts['stru_file'],
             "system" : block_steps.inputs.artifacts['system'],
             "model" : block_steps.inputs.artifacts['model'],
-            # "model_devis" : prep_run_lmp.outputs.artifacts['model_devis'],
         },
         key = step_keys['convert-scf'],
         executor = convert_scf_executor,
@@ -192,13 +181,12 @@ def _iterblock(
         parameters={
             "block_id" : block_steps.inputs.parameters['block_id'],
             "scf_abacus_config" : block_steps.inputs.parameters['config'],
-            # "fp_config": block_steps.inputs.parameters['fp_config'],
-            # "type_map": block_steps.inputs.parameters["type_map"],
+            "n_iter": block_steps.inputs.parameters['n_iter'],
         },
         artifacts={
             "system": convert_scf.outputs.artifacts['system'], 
+            "model" : convert_scf.outputs.artifacts['model'],
             "stru_file" : block_steps.inputs.artifacts['stru_file']        
-            # "confs" : select_confs.outputs.artifacts['confs'],
         },
         key = '--'.join(["%s"%block_steps.inputs.parameters["block_id"], "prep-run-scf"]),
     )
@@ -216,10 +204,6 @@ def _iterblock(
         ),
         parameters={
             "gather_config": block_steps.inputs.parameters['config'],
-            # "task_paths" : prep_run_scf.outputs.parameters["task_paths"],
-
-            # "type_map": block_steps.inputs.parameters["type_map"],
-            # "traj_fmt": 'lammps/dump',
         },
         artifacts={
             "task_paths" : prep_run_scf.outputs.artifacts['task_paths'],
@@ -238,13 +222,10 @@ def _iterblock(
             "block_id" : block_steps.inputs.parameters['block_id'],
             "n_iter" : block_steps.inputs.parameters['n_iter'],
             "train_config" : block_steps.inputs.parameters["config"],
-            # "fp_config": block_steps.inputs.parameters['fp_config'], 
-            # "type_map": block_steps.inputs.parameters["type_map"],
         },
         artifacts={
             "00_scf": gather_stats_scf.outputs.artifacts['00_scf'], 
-            "model": block_steps.outputs.artifacts['model'], 
-            # "confs" : select_confs.outputs.artifacts['confs'],
+            "model": block_steps.inputs.artifacts['model'], 
         },
         key = '--'.join(["%s"%block_steps.inputs.parameters["block_id"], "prep-run-train"]),
     )

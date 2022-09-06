@@ -107,8 +107,10 @@ class RunScfAbacus(OP):
     def get_input_sign(cls):
         return OPIOSign({
             "scf_abacus_config" : Union[dict, List[dict]],
+            "n_iter" : int,
             "task_path" : Artifact(Path),
             "stru_file" : Artifact(Path),
+            "model" : Artifact(Path, optional=True),
         })
     
     @classmethod
@@ -126,6 +128,7 @@ class RunScfAbacus(OP):
     ) -> OPIO:
         cwd = os.getcwd()
 
+        n_iter = ip["n_iter"]
         task_path = ip["task_path"]
         scf_abacus_config = ip["scf_abacus_config"]
         run_cmd = scf_abacus_config.pop("run_cmd")
@@ -136,7 +139,10 @@ class RunScfAbacus(OP):
         errlog="err.log"
 
         stru_file = ip["stru_file"]
+        model = ip["model"]
         shutil.copytree(stru_file, task_path,dirs_exist_ok = True)
+        if n_iter > 0:
+            shutil.copy(model, task_path)
         
         os.chdir(task_path)
 
