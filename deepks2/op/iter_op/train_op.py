@@ -55,6 +55,7 @@ class PrepTrain(OP):
             "preprocess_args":None, 
             "train_args":None, 
             "fit_elem":False,
+            "proj_basis":None
         }
 
         train_config = PrepTrain.check_arg_dict(train_config, DEFAULT_TRAIN_ARGS, strict=True)

@@ -128,7 +128,7 @@ init_scf_abacus:
 
 default_config:
   template_config:
-    image: 'base_dflow_deepks_v2'
+    image: 'base_dflow_deepks'
 
 scf_machine:
   template_config:
@@ -148,7 +148,7 @@ scf_machine:
 
 train_machine:
   template_config:
-    image: 'base_dflow_deepks_v2'
+    image: 'base_dflow_deepks'
   executor:
     type: lebesgue_v2
     extra:
@@ -175,4 +175,4 @@ lebesgue_context_config:
     job_type: indicate
   tag: 'deepks-flow-syf'
 
-upload_python_package : "/opt/homebrew/anaconda3/envs/dflow2/lib/python3.9/site-packages/deepks2"
+upload_python_package : ["/opt/homebrew/anaconda3/envs/dflow2/lib/python3.9/site-packages/deepks2"]

@@ -1,5 +1,4 @@
 import glob, os, pickle, sys, shutil
-from lib2to3.pytree import convert
 from pathlib import Path
 from dflow import (
     InputParameter,
@@ -26,7 +25,6 @@ from dflow.python import (
     FatalError,
     TransientError,
 )
-
 
 from deepks2.utils.deepks_utils import copy_file, copy_dir
 from deepks2.utils.deepks_utils import load_yaml, save_yaml
@@ -340,7 +338,7 @@ def submit_iterate(*args, **kwargs):
 
     deepks_iter = workflow_iterate(*args, **kwargs)
 
-    wf = Workflow(name="deepks", context=lebesgue_context)
+    wf = Workflow(name="deepks-iter", context=lebesgue_context)
     wf.add(deepks_iter)
 
     # reuse steps for resubmit

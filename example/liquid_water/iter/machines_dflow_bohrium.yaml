@@ -1,0 +1,59 @@
+# this is only part of input settings. 
+# should be used together with systems.yaml and params.yaml
+default_config:
+  template_config:
+    image: 'base_dflow_deepks'
+
+scf_machine:
+  template_config:
+    image: 'abacus-workshop'
+  executor:
+    type: lebesgue_v2
+    extra:
+      scass_type: c64_m192_cpu
+      machine_type: c64_m192_cpu
+      platform: ali
+      program_id: "xxx"
+      job_type: indicate # container
+      region: default
+  resources:
+    cpus_per_task: 64
+    group_size: 6
+
+train_machine:
+  template_config:
+    image: 'base_dflow_deepks'
+  executor:
+    type: lebesgue_v2
+    extra:
+      scass_type: c16_m32_cpu
+      machine_type: c16_m32_cpu
+      platform: ali
+      program_id: "xxx"
+      job_type: indicate
+      region: default
+
+# bohrium
+dflow_config:
+  host: 'http://39.106.93.187:32746'
+  s3_endpoint: '39.106.93.187:30900'
+  _catalog_file_name: dflow
+lebesgue_context_config:
+  username: "xxx"
+  password: "xxx"
+  executor: lebesgue_v2
+  extra:
+    scass_type: c2_m4_cpu
+    machine_type: c2_m4_cpu
+    program_id: "xxx"
+    job_type: indicate
+  tag: 'deepks-flow-syf'
+
+upload_python_package : ["/opt/homebrew/anaconda3/envs/dflow2/lib/python3.9/site-packages/deepks2"]
+
+# other settings (these are default, can be omitted)
+cleanup: false # whether to delete slurm and err files
+strict: true # do not allow undefined machine parameters
+
+#paras for abacus
+use_abacus: true # use abacus in scf calculation

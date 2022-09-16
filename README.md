@@ -61,3 +61,6 @@ While using the dflow, we can specify every OP to use slurm, Bohrium or locol ma
 Cause we have the excellent work DPGEN2 as a reference, while making this project, I have learnt a lot from it.
 The different between **init_iter_block_steps** and **iter_block_steps** are model and config which contains scf_config and train_config. We should get a model from **init_iter_block_steps** to input into **iter_block_steps**.
 The Super-OP **iter_block_steps** can be reused so that the iteration number can be increased.
+
+### 中文文档
+[中文文档](https://vks4ujoqp8.feishu.cn/docx/doxcnAywuNxkdsNTBnkTXDs1jRc)，含TODO
