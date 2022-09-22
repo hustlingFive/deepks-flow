@@ -26,10 +26,10 @@ from dflow.python import (
     TransientError,
 )
 
-from deepks2.utils.deepks_utils import copy_file, copy_dir
-from deepks2.utils.deepks_utils import load_yaml, save_yaml
-from deepks2.utils.deepks_utils import load_sys_paths
-from deepks2.utils.deepks_utils import load_basis, save_basis
+from deepks2.utils.path_utils import copy_file, copy_dir
+from deepks2.utils.file_utils import load_yaml, save_yaml
+from deepks2.utils.arg_utils import load_sys_paths
+from deepks2.utils.basis_utils import load_basis, save_basis
 from deepks2.utils.step_config import normalize as normalize_step_dict
 
 

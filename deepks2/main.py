@@ -5,7 +5,8 @@ try:
     import deepks2
 except ImportError as e:
     sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../")
-from deepks2.utils.deepks_utils import load_yaml, deep_update
+from deepks2.utils.arg_utils import deep_update
+from deepks2.utils.file_utils import load_yaml
 
 
 
