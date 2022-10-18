@@ -1,6 +1,17 @@
+# args that must be modified
+bohrium_account_name: &bohrium_account_name "xxx"
+bohrium_account_password: &bohrium_account_password "xxx"
+bohrium_program_id: &bohrium_program_id "xxx"  # this arg should be string type
+dflow_config_host: &dflow_config_host "xxx"
+dflow_config_s3_endpoint: &dflow_config_s3_endpoint "xxx"
+upload_python_package : ["/opt/homebrew/anaconda3/envs/dflow2/lib/python3.9/site-packages/deepks2",
+  "/opt/homebrew/anaconda3/envs/dflow2/lib/python3.9/site-packages/deepks"]
+
 # other settings (these are default, can be omitted)
 cleanup: false # whether to delete slurm and err files
 strict: true # do not allow undefined machine parameters
+
+no_test: false
 
 #paras for abacus
 use_abacus: true # use abacus in scf calculation
@@ -9,10 +20,7 @@ use_abacus: true # use abacus in scf calculation
 # this is only part of input settings. 
 # should be used together with systems.yaml and machines.yaml
 
-# auto judge args
-converge:
-  n_iter_max : 5
-  train_curve_wave_max : 0.1
+n_iter: 2
   
 # directory setting (these are default choices, can be omitted)
 workdir: "."
@@ -20,7 +28,10 @@ share_folder: "share" # folder that stores all other settings
 
 # scf settings, set to false when n_iter = 0 to skip checking
 scf_input: false
+init_scf: True
 
+# init settings, these are for DeePHF task
+init_model: false # do not use existing model to restart from
 
 # train settings, set to false when n_iter = 0 to skip checking
 train_input:
@@ -34,7 +45,7 @@ train_input:
   preprocess_args:
     preshift: false # restarting model already shifted. Will not recompute shift value
     prescale: false # same as above
-    prefit_ridge: 1e1
+    prefit_ridge: 10 # 1e1
     prefit_trainable: false
   train_args: 
     decay_rate: 0.5
@@ -43,11 +54,6 @@ train_input:
     force_factor: 1
     n_epoch: 5000
     start_lr: 0.0001
-
-# init settings, these are for DeePHF task
-init_model: false # do not use existing model to restart from
-
-init_scf: True
 
 init_train: # parameters for nn training
   model_args:
@@ -61,7 +67,7 @@ init_train: # parameters for nn training
   preprocess_args:
     preshift: true # shift the descriptor by its mean
     prescale: false # scale the descriptor by its variance (can cause convergence problem)
-    prefit_ridge: 1e1 # do a ridge regression as prefitting
+    prefit_ridge: 10 # do a ridge regression as prefitting
     prefit_trainable: false
   train_args: 
     decay_rate: 0.96 # learning rate decay factor
@@ -76,7 +82,7 @@ init_train: # parameters for nn training
 
 # training and testing systems
 systems_train: # can also be files that containing system paths
-  - ../systems/group.0[0-2] # support glob
+  - ../systems/group.00 # support glob
 
 systems_test: # if empty, use the last system of training set
   - ../systems/group.03
@@ -87,11 +93,11 @@ scf_abacus:
   ntype: 2
   nbands: 8
   ecutwfc: 50
-  scf_thr: 1e-7
+  scf_thr: 1.0e-7
   scf_nmax: 50
   dft_functional: "lda"
   gamma_only: 1
-  cal_force: 1
+  cal_force: 0
   #STRU args ( Here are default STRU args, you can set for each group in  ../systems/group.xx/stru_abacus.yaml )
   orb_files: ["O_gga_6au_60Ry_2s2p1d.orb", "H_gga_6au_60Ry_2s1p.orb"]
   pp_files: ["O_ONCV_PBE-1.0.upf", "H_ONCV_PBE-1.0.upf"]
@@ -102,6 +108,9 @@ scf_abacus:
   #cmd args
   run_cmd : "mpirun"
   abacus_path: "/root/abacus-develop/build/abacus"
+  # parallelism config
+  group_size : 100
+  cpus_per_task : 8
 
 # init_scf_abacus.yaml
 init_scf_abacus:
@@ -111,7 +120,7 @@ init_scf_abacus:
   ntype: 2
   nbands: 8
   ecutwfc: 50
-  scf_thr: 1e-7
+  scf_thr: 1.0e-7
   scf_nmax: 50
   dft_functional: "lda"
   gamma_only: 1
@@ -122,13 +131,15 @@ init_scf_abacus:
   #cmd args
   run_cmd : "mpirun"
   abacus_path: "/root/abacus-develop/build/abacus"
-
+  # parallelism config
+  group_size : 100
+  cpus_per_task : 8
 
 # machine.yaml
 
 default_config:
   template_config:
-    image: 'base_dflow_deepks'
+    image: 'hustling/base-dflow-deepks:1.0'
 
 scf_machine:
   template_config:
@@ -139,40 +150,38 @@ scf_machine:
       scass_type: c16_m32_cpu
       machine_type: c16_m32_cpu
       platform: ali
-      program_id: "xxx"
+      program_id: *bohrium_program_id
       job_type: indicate # container
       region: default
-  resources:
-    cpus_per_task: 8
-    group_size: 200
+      log_file: tmp_log
 
 train_machine:
   template_config:
-    image: 'base_dflow_deepks'
+    image: 'hustling/base-dflow-deepks:1.0'
   executor:
     type: lebesgue_v2
     extra:
       scass_type: c16_m32_cpu
       machine_type: c16_m32_cpu
       platform: ali
-      program_id: "xxx"
-      job_type: indicate
+      program_id: *bohrium_program_id
+      job_type: container
       region: default
+      log_file: tmp_log
 
 # bohrium
 dflow_config:
-  host: 'http://39.106.93.187:32746'
-  s3_endpoint: '39.106.93.187:30900'
+  host: *dflow_config_host
+  s3_endpoint: *dflow_config_s3_endpoint
   _catalog_file_name: dflow
 lebesgue_context_config:
-  username: "xxx"
-  password: "xxx"
-  executor: lebesgue_v2
+  username: *bohrium_account_name
+  password: *bohrium_account_password
+  executor: mixed
   extra:
     scass_type: c2_m4_cpu
     machine_type: c2_m4_cpu
-    program_id: "xxx"
-    job_type: indicate
-  tag: 'deepks-flow-syf'
+    program_id: *bohrium_program_id
+    job_type: container
+  tag: 'deepks-abacus-iter-flow'
 
-upload_python_package : ["/opt/homebrew/anaconda3/envs/dflow2/lib/python3.9/site-packages/deepks2"]

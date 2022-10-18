@@ -46,17 +46,17 @@ def get_with_prefix(p, base=None, prefer=None, nullable=False):
     raise FileNotFoundError(f"{pattern}* not exists or has more than one matches")
 
     
-def copy_dir(src, dst, use_abs=False):
+def link_file(src, dst, use_abs=False):
     src, dst = Path(src), Path(dst)
     assert src.exists(), f'{src} does not exist'
     src_path = os.path.abspath(src) if use_abs else os.path.relpath(src, dst.parent)
     if not dst.exists():
         if not dst.parent.exists():
             os.makedirs(dst.parent)
-        shutil.copytree(src_path, dst)
+        os.symlink(src_path, dst)
     elif not os.path.samefile(src, dst):
         os.remove(dst)
-        shutil.copytree(src_path, dst)
+        os.symlink(src_path, dst)
 
 
 def copy_file(src, dst):

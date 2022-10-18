@@ -10,7 +10,6 @@ __all__ = [
     "flow",
     "step",
     "utils"
-    # "tools" # collection of command line scripts, should not be imported by user
 ]
 
 def __getattr__(name):

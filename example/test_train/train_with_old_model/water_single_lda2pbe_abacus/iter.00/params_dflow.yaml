@@ -1,0 +1,38 @@
+# this is only part of input settings. 
+# should be used together with systems.yaml and machines.yaml
+  
+# directory setting (these are default choices, can be omitted)
+workdir: "."
+share_folder: "share" # folder that stores all other settings
+
+# scf settings, set to false when n_iter = 0 to skip checking
+scf_input: false
+
+# init settings, these are for DeePHF task
+init_model: ./model.pth # set 'false' for not using existing model to restart from
+
+init_scf: True
+
+# train settings, set to false when n_iter = 0 to skip checking
+train_input:
+  # model_args is ignored, since this is used as restart
+  data_args: 
+    batch_size: 16
+    group_batch: 1
+    extra_label: true
+    conv_filter: true
+    conv_name: conv
+  preprocess_args:
+    preshift: false # restarting model already shifted. Will not recompute shift value
+    prescale: false # same as above
+    prefit_ridge: 10 # 1e1
+    prefit_trainable: false
+  train_args: 
+    decay_rate: 0.5
+    decay_steps: 1000
+    display_epoch: 100
+    force_factor: 1
+    n_epoch: 5000
+    start_lr: 0.0001
+
+

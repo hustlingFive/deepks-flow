@@ -5,9 +5,10 @@ from dflow.python import (
     Artifact
 )
 import os, shutil
-import numpy as np
-from typing import Tuple, List, Set,Union
+from typing import List
 from pathlib import Path
+from deepks2.utils.file_utils import load_yaml
+from deepks2.constants import DATA_TRAIN, DATA_TEST, SYS_TRAIN, SYS_TEST, SCF_STEP_DIR
 
 class GatherStatsScfAbacus(OP):
     
@@ -15,9 +16,10 @@ class GatherStatsScfAbacus(OP):
     @classmethod
     def get_input_sign(cls):
         return OPIOSign({
-            "gather_config": Union[dict, List[dict]],
+            "yaml_name" : str,
+            "config_file": Artifact(Path),
+            "system":Artifact(Path),
             "task_paths" : Artifact(List[Path]),
-            "system":Artifact(Path)
         })
 
     @classmethod
@@ -31,24 +33,23 @@ class GatherStatsScfAbacus(OP):
             self,
             ip : OPIO,
     ) -> OPIO:
-
         cwd = os.getcwd()
-        task_paths = ip["task_paths"]
-        gather_config = ip["gather_config"]
+        # OP input
+        yaml_name = ip["yaml_name"]
+        config_file = ip["config_file"]
         system = ip["system"]
+        task_paths = ip["task_paths"]
 
         os.chdir(system)
 
-        os.mkdir("00.scf")
-        scf_dir = Path("00.scf")
-        train_dump = str(scf_dir/"data_train")
-        test_dump = str(scf_dir/"data_test")
-        SYS_TRAIN = "systems_train"
-        SYS_TEST = "systems_test"
+        os.mkdir(SCF_STEP_DIR)
+        scf_dir = Path(SCF_STEP_DIR)
+        train_dump = str(scf_dir/DATA_TRAIN)
+        test_dump = str(scf_dir/DATA_TEST)
+        gather_scf_config = load_yaml(config_file/yaml_name)
 
-
-        systems_train = [SYS_TRAIN+"/"+s for s in os.listdir(SYS_TRAIN)]
-        systems_test = [SYS_TEST+"/"+s for s in os.listdir(SYS_TEST)]
+        systems_train = [SYS_TRAIN+"/"+s for s in os.listdir(SYS_TRAIN)] if os.path.exists(SYS_TRAIN) else []
+        systems_test = [SYS_TEST+"/"+s for s in os.listdir(SYS_TEST)] if os.path.exists(SYS_TEST) else []
         
         for path in task_paths:
             sys = SYS_TRAIN if os.path.basename(path).startswith("train") else SYS_TEST
@@ -64,19 +65,18 @@ class GatherStatsScfAbacus(OP):
 
         from deepks.iterate.template_abacus import gather_stats_abacus
 
-        gather_config.update(
+        gather_scf_config.update(
             systems_train = systems_train,
             systems_test = systems_test,
             train_dump = train_dump,
             test_dump = test_dump,
-            **gather_config
         )
         
-        gather_stats_abacus(**gather_config)
+        gather_stats_abacus(**gather_scf_config)
         
         os.chdir(cwd)
         return OPIO({
-            '00_scf' : system/"00.scf",
+            '00_scf' : system/SCF_STEP_DIR,
         })
 
     @staticmethod

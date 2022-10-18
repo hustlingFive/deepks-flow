@@ -1,0 +1,41 @@
+FROM ubuntu:22.04
+ENV LANG=C.UTF-8
+ENV TZ=Asia/Shanghai
+ENV DEBIAN_FRONTEND=noninteractive
+
+# install python
+RUN apt-get update -y && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository ppa:deadsnakes/ppa && \
+    apt-get update -y && \
+    apt-get install -y --no-install-recommends python3.8 python3-pip python3.8-dev
+RUN pip3 install --upgrade pip
+# install dflow requirements
+# https://github.com/deepmodeling/dflow/blob/master/requirements.txt
+RUN pip3 install --no-cache-dir six \
+                                python-dateutil \
+                                urllib3 \
+                                certifi \
+                                typeguard \
+                                argo-workflows==5.0.0 \
+                                jsonpickle \
+                                minio \
+                                kubernetes \
+                                pyyaml \
+                                cloudpickle \
+                                requests
+
+# install deepks requirements
+RUN pip3 install --no-cache-dir torch torchvision torchaudio
+RUN pip3 install --no-cache-dir numpy \
+                                paramiko \
+                                ruamel.yaml \
+                                dpdispatcher
+
+# install deepks-flow requirements
+RUN pip3 install --no-cache-dir numpy \
+                                paramiko \
+                                ruamel.yaml \
+                                pytest-shutil \
+                                # pydflow \
+                                dargs

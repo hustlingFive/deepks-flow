@@ -1,7 +1,5 @@
 import os, shutil,subprocess
 from pathlib import Path
-from deepks2.utils.run_command import run_command
-from deepks2.utils.chdir import set_directory
 from dflow.python import (
     OP,
     OPIO,
@@ -15,15 +13,20 @@ from typing import (
     List, 
 )
 from typing import Tuple, List, Union
-
-
+from deepks2.constants import(
+    SYS_TRAIN,
+    SYS_TEST
+)
+from deepks2.utils.file_utils import load_yaml
+from deepks2.constants import SCF_OUT_LOG, SCF_ERR_LOG
 
 class PrepScfAbacus(OP):
 
     @classmethod
     def get_input_sign(cls):
         return OPIOSign({
-            "scf_abacus_config" : Union[dict, List[dict]],
+            "yaml_name" : str,
+            "config_file" : Artifact(Path),
             "system" : Artifact(Path),
         })
 
@@ -39,22 +42,25 @@ class PrepScfAbacus(OP):
             self,
             ip : OPIO,
     ) -> OPIO:
-
-        scf_abacus_config = ip["scf_abacus_config"]
+        # OP input
+        yaml_name = ip["yaml_name"]
+        config_file = ip["config_file"]
         system = ip["system"]
-        SYS_TRAIN = "systems_train"
-        SYS_TEST = "systems_test"
-        group_size = scf_abacus_config.pop("group_size", 150)
 
+        prep_scf_config = load_yaml(config_file/yaml_name)
+
+        group_size = prep_scf_config.pop("group_size")
 
         system_train = []
         system_test = []
         train_parent = system/SYS_TRAIN
         test_parent = system/SYS_TEST
-        for group in os.listdir(train_parent):
-            system_train.append(train_parent/group)
-        for group in os.listdir(test_parent):
-            system_test.append(test_parent/group)
+        if os.path.exists(train_parent):
+            for group in os.listdir(train_parent):
+                system_train.append(train_parent/group)
+        if os.path.exists(test_parent):
+            for group in os.listdir(test_parent):
+                system_test.append(test_parent/group)
 
         sys_train_name = [os.path.basename(s) for s in system_train]
         sys_test_name = [os.path.basename(s) for s in system_test]
@@ -106,10 +112,11 @@ class RunScfAbacus(OP):
     @classmethod
     def get_input_sign(cls):
         return OPIOSign({
-            "scf_abacus_config" : Union[dict, List[dict]],
-            "n_iter" : int,
-            "task_path" : Artifact(Path),
+            "no_model" : bool,
+            "yaml_name" : str,
+            "config_file" : Artifact(Path),
             "stru_file" : Artifact(Path),
+            "task_path" : Artifact(Path),
             "model" : Artifact(Path, optional=True),
         })
     
@@ -117,8 +124,8 @@ class RunScfAbacus(OP):
     def get_output_sign(cls):
         return OPIOSign({
             "task_path" : Artifact(Path),
-            "err" : Artifact(Path),
-            "log_scf" : Artifact(Path),
+            # "err" : Artifact(Path),
+            # "log_scf" : Artifact(Path),
         })
 
     @OP.exec_sign_check
@@ -127,21 +134,22 @@ class RunScfAbacus(OP):
             ip : OPIO,
     ) -> OPIO:
         cwd = os.getcwd()
-
-        n_iter = ip["n_iter"]
-        task_path = ip["task_path"]
-        scf_abacus_config = ip["scf_abacus_config"]
-        run_cmd = scf_abacus_config.pop("run_cmd")
-        abacus_path = scf_abacus_config.pop("abacus_path")
-        cpus_per_task = scf_abacus_config.pop("cpus_per_task",3)
-
-        outlog="out.log"
-        errlog="err.log"
-
+        # OP input
+        no_model = ip["no_model"]
+        yaml_name = ip["yaml_name"]
+        config_file = ip["config_file"]
         stru_file = ip["stru_file"]
+        task_path = ip["task_path"]
         model = ip["model"]
+
+        run_scf_config = load_yaml(config_file/yaml_name)
+
+        run_cmd = run_scf_config.pop("run_cmd")
+        abacus_path = run_scf_config.pop("abacus_path")
+        cpus_per_task = run_scf_config.pop("cpus_per_task")
+
         shutil.copytree(stru_file, task_path,dirs_exist_ok = True)
-        if n_iter > 0:
+        if not no_model:
             shutil.copy(model, task_path)
         
         os.chdir(task_path)
@@ -151,7 +159,7 @@ class RunScfAbacus(OP):
             cmd=str(f"ulimit -s unlimited && \
                 . /opt/intel/oneapi/setvars.sh && \
                 cd ABACUS/{f}/ &&  \
-                {run_cmd} -n {cpus_per_task} {abacus_path} > {outlog} 2>{errlog}  &&  \
+                {run_cmd} -n {cpus_per_task} {abacus_path} > {SCF_OUT_LOG} 2>{SCF_ERR_LOG}  &&  \
                 echo {f}`grep convergence ./OUT.ABACUS/running_scf.log` > conv  &&  \
                 echo {f}`grep convergence ./OUT.ABACUS/running_scf.log`")
             p = subprocess.Popen(
@@ -162,8 +170,8 @@ class RunScfAbacus(OP):
 
         return OPIO({
             "task_path": task_path,
-            "log_scf" : task_path/outlog,
-            "err" : task_path/errlog,
+            # "log_scf" : task_path/outlog,
+            # "err" : task_path/errlog,
         })
 
 

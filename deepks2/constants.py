@@ -1,17 +1,39 @@
 import numpy as np
-scf_abacus_index_pattern = "%04d"
 DEFAULT_SCF_MACHINE = {
     "template_config": None, 
     "executor": None,
-    "resources":None
 }
 
 # args not specified here may cause error
 DEFAULT_TRN_MACHINE = {
     "template_config": None, 
     "executor": None,
-    "resources":None
+}
 
+BOHRIUM_SCF_ABACUS_CONVERT = {
+    "extra": {
+        "job_name":"deepks_scf_abacus_convert"
+    }
+}
+BOHRIUM_SCF_ABACUS_PREP = {
+    "extra": {
+        "job_name":"deepks_scf_abacus_prep"
+    }
+}
+BOHRIUM_SCF_ABACUS_RUN = {
+    "extra": {
+        "job_name":"deepks_scf_abacus_run"
+    }
+}
+BOHRIUM_SCF_ABACUS_GATHER = {
+    "extra": {
+        "job_name":"deepks_scf_abacus_gather"
+    }
+}
+BOHRIUM_DEEPKS_TRAIN = {
+    "extra": {
+        "job_name":"deepks_train"
+    }
 }
 
 SCF_ARGS_NAME = "scf_input.yaml"
@@ -23,7 +45,6 @@ INIT_TRN_NAME = "init_train.yaml"
 
 DATA_TRAIN = "data_train"
 DATA_TEST  = "data_test"
-MODEL_FILE = "model.pth"
 PROJ_BASIS = "proj_basis.npz"
 
 SCF_STEP_DIR = "00.scf"
@@ -38,6 +59,11 @@ DEFAULT_TEST = "systems_test.raw"
 
 MODEL_FILE = "model.pth"
 CMODEL_FILE = "model.ptg"
+RESTART_MODEL = "old_model.pth"
+
+LOG_TRAIN = "log.train"
+SCF_OUT_LOG = "out.log"
+SCF_ERR_LOG = "err.log"
 
 NAME_TYPE = {   'H': 1, 'He': 2, 'Li': 3, 'Be': 4, 'B': 5, 'C': 6, 'N': 7,
             'O': 8, 'F': 9, 'Ne': 10, 'Na': 11, 'Mg': 12, 'Al': 13,
@@ -68,9 +94,9 @@ TYPE_NAME ={v:k for k, v in NAME_TYPE.items()}
 ABACUS_CMD="bash run_abacus.sh"
 
 DEFAULT_SCF_ARGS_ABACUS={
-    "orb_files": ["orb"],  #atomic number order
-    "pp_files": ["upf"],  #atomic number order
-    "proj_file": ["orb"], 
+    "orb_files": [],  # "orb" atomic number order
+    "pp_files": [],  # "upf" atomic number order
+    "proj_file": [],  # "orb"
     "ntype": 1,
     "nbands": None,
     "ecutwfc": 50,
@@ -91,10 +117,21 @@ DEFAULT_SCF_ARGS_ABACUS={
     "deepks_descriptor_lmax":0,
     "deepks_scf":0,
     "lattice_constant": 1,
-    "lattice_vector": np.eye(3,dtype=int),
+    "lattice_vector": np.eye(3,dtype=int).tolist(),
     "run_cmd": "mpirun",
     "sub_size": 1,
     "abacus_path": "/usr/local/bin/ABACUS.mpi",
+    "group_size" : 100, # parallelism config
+    "cpus_per_task" : 2, # parallelism config
+}
+
+DEFAULT_TRAIN_ARGS = {
+   "model_args":None, 
+   "data_args":None, 
+   "preprocess_args":None, 
+   "train_args":None, 
+   "fit_elem":False,
+   "proj_basis":None
 }
 
 default_image = 'base_dflow_deepks'

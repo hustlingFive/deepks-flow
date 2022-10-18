@@ -57,3 +57,6 @@ venv.bak/
 # examples
 ABACUS/
 mixed_system_data/
+config_file/
+share/
+stru_file/

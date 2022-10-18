@@ -1,9 +1,11 @@
 import os, sys, shutil
-from deepks2.utils.path_utils import copy_file, copy_dir
+from tkinter.messagebox import NO
+from deepks2.utils.path_utils import copy_file, link_file
 from deepks2.utils.file_utils import load_yaml, save_yaml
 from deepks2.utils.arg_utils import load_sys_paths
 from pathlib import Path
-from deepks2.constants import *
+from deepks2.constants import (DATA_TEST,DATA_TRAIN, DEFAULT_TRAIN_ARGS,
+DEFAULT_SCF_ARGS_ABACUS,SYS_TRAIN,SYS_TEST,TRN_ARGS_NAME,INIT_TRN_NAME,SCF_ARGS_NAME,INIT_SCF_NAME)
 
 def assert_exist(path):
     if not os.path.exists(path):
@@ -79,38 +81,69 @@ def collect_systems(systems, folder=None):
         return bases
     targets = [os.path.join(folder, b) for b in bases]
     for s, t in zip(sys_list, targets):
-        copy_dir(s, t, use_abs=True)
+        link_file(s, t, use_abs=True)
     return targets
 
-def collect_inputs(workdir=".",share_folder = "share",input_folder = "input",
+def collect_inputs(workdir=".",stru_file = "stru_file",share_folder = "share",
+                config_file="config_file", strict = True, init_model = False,
                 systems_train = None, systems_test = None,
-                train_input=None, init_train=None,
-                scf_input=None, init_scf=None):
-    # os.mkdir(input_folder)
+                train_only = False,no_test = False,
+                train_conf = None, init_train_conf = None,
+                scf_conf = None, init_scf_conf = None,
+                default_train_args = DEFAULT_TRAIN_ARGS, default_scf_args_abacus = DEFAULT_SCF_ARGS_ABACUS):
+    # make folders
     workdir = Path(workdir)
     this_share = workdir/share_folder
-    this_input = workdir/input_folder
+    this_stru = workdir/stru_file
+    this_conf = workdir/config_file
 
-    # check share folder contains required data
-    # and collect the systems into share folder
-    systems_train = collect_systems(systems_train, os.path.join(this_share, SYS_TRAIN))
-    # check test systems 
-    systems_test = collect_systems(systems_test, os.path.join(this_share, SYS_TEST))
+    # check share_folder, systems 
+    if not train_only:
+        if systems_train is not None:
+            systems_train = collect_systems(systems_train, os.path.join(this_share, SYS_TRAIN))
+        elif not os.path.exists(this_share/SYS_TRAIN):
+            os.makedirs(this_share/SYS_TRAIN)
+        if systems_test is not None:
+            systems_test = collect_systems(systems_test, os.path.join(this_share, SYS_TEST))
+        elif not os.path.exists(this_share/SYS_TEST):
+            os.makedirs(this_share/SYS_TEST)
+    else:
+        if not os.path.exists(this_share/DATA_TRAIN):
+            raise RuntimeError('train data should in : ', str(this_share/DATA_TRAIN))
+        if not os.path.exists(this_share/DATA_TEST) and not no_test:
+            raise RuntimeError('train data should in : ', str(this_share/DATA_TEST))
 
-    check_input_folder(train_input,TRN_ARGS_NAME,this_input)
-    check_input_folder(init_train,INIT_TRN_NAME,this_input)
-    check_input_folder(scf_input,SCF_ARGS_NAME_ABACUS,this_input)
-    check_input_folder(init_scf,INIT_SCF_NAME_ABACUS,this_input)
+    orb_scf, train_tag = None, None
+    if train_conf is not None:
+        train_conf = check_arg_dict(train_conf, default_train_args, strict)
+        check_input_folder(train_conf,TRN_ARGS_NAME,this_conf)
+        train_tag = train_conf
+    if init_train_conf is not None:
+        init_train_conf = check_arg_dict(init_train_conf, default_train_args, strict)
+        check_input_folder(init_train_conf,INIT_TRN_NAME,this_conf)
+        if not init_model:
+            train_tag = init_train_conf
+    if scf_conf is not None:
+        scf_conf = check_arg_dict(scf_conf, default_scf_args_abacus, strict)
+        check_input_folder(scf_conf,SCF_ARGS_NAME,this_conf)
+        orb_scf = scf_conf
+    if init_scf_conf is not None:
+        init_scf_conf = check_arg_dict(init_scf_conf, default_scf_args_abacus, strict)
+        check_input_folder(init_scf_conf,INIT_SCF_NAME,this_conf)
+        if not init_model:
+            orb_scf = init_scf_conf
 
-    if scf_input is not None :
-        orb_files = scf_input["orb_files"]
-        proj_file = scf_input["proj_file"]
-        pp_files = scf_input["pp_files"]
-        for file in orb_files:
-            shutil.copy(workdir/file, this_input)
-        for file in pp_files:
-            shutil.copy(workdir/file, this_input)
-        for file in proj_file:
-            shutil.copy(workdir/file, this_input)
+    if orb_scf is not None :
+        for file in orb_scf["orb_files"]:
+            link_file(workdir/file, this_stru/file)
+        for file in orb_scf["pp_files"]:
+            link_file(workdir/file, this_stru/file)
+        for file in orb_scf["proj_file"]:
+            link_file(workdir/file, this_stru/file)
+    else:
+        print("Run without scf input.")
+    
+    if train_tag is None :
+        print("Run without train input.")
 
-    return this_share, this_input
+    return this_share, this_stru, this_conf

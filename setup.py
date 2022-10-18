@@ -11,11 +11,11 @@ install_requires=['numpy', 'paramiko', 'ruamel.yaml', 'pytest-shutil', 'pydflow'
 
 setuptools.setup(
     name="deepks2",
-    version="1.0",
+    version="1.1",
     setup_requires=['setuptools_scm'],
     author="Yifan Shan",
     author_email="xiaoshan@mail.ustc.edu.cn",
-    description="DeePKS-kit: generate accurate (self-consistent) energy functionals",
+    description="DeePKS-flow: a 'dflow' workflow for DeePKS-kit",
     long_description=readme,
     packages=[
         "deepks2",
@@ -29,7 +29,7 @@ setuptools.setup(
     classifiers=[
         "Programming Language :: Python :: 3.7",
     ],
-    keywords='deepks DeePKS-kit',
+    keywords='deepks2 DeePKS-flow',
     install_requires=install_requires,
     python_requires=">=3.7",
     entry_points={

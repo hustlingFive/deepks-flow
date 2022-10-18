@@ -25,8 +25,10 @@ def main_cli(args=None):
     # sepatate all sub_cli to make them useable independently 
     if args.command.upper().startswith("ITER"):
         sub_cli = iter_cli
-    elif args.command.upper().startswith("HF"):
-        sub_cli = hfscf_cli
+    elif args.command.upper().startswith("SCF"):
+        sub_cli = scf_cli
+    elif args.command.upper().startswith("TRAIN"):
+        sub_cli = train_cli
     else:
         return ValueError(f"unsupported sub-command: {args.command}")
     
@@ -74,15 +76,16 @@ def iter_cli(args=None):
     from deepks2.flow.submit_iter import submit_iterate
     submit_iterate(**argdict)
 
-def hfscf_cli(args=None):
+def scf_cli(args=None):
     parser = argparse.ArgumentParser(
-                prog="deepks2 hfscf",
-                description="Calculate and save SCF results using given model.",
+                prog="deepks2 scf",
+                description="Calculate and save SCF results using or not using a given model.",
                 argument_default=argparse.SUPPRESS)
     parser.add_argument("argfile", nargs="*", default=[],
                         help='the input yaml file for args, '
                              'if more than one, the latter has higher priority')
-    
+    # parser.add_argument("-m", "--init-model", nargs="*",
+    #                     help='if set, scf_abacus will load an existing model')
     args = parser.parse_args(args)
     argdict = {}
     for fl in args.argfile:
@@ -90,8 +93,28 @@ def hfscf_cli(args=None):
     del args.argfile
     argdict.update(vars(args))
     
-    from deepks2.flow.submit_hfscf import submit_hfscf
-    submit_hfscf(**argdict)
+    from deepks2.flow.submit_scf_abacus import submit_scf_abacus
+    submit_scf_abacus(**argdict)
+
+def train_cli(args=None):
+    parser = argparse.ArgumentParser(
+                prog="deepks2 train",
+                description="Train a new model giving or not giving an old model.",
+                argument_default=argparse.SUPPRESS)
+    parser.add_argument("argfile", nargs="*", default=[],
+                        help='the input yaml file for args, '
+                             'if more than one, the latter has higher priority')
+    # parser.add_argument("-m", "--init-model", nargs="*",
+    #                     help='if set, scf_abacus will load an existing model')
+    args = parser.parse_args(args)
+    argdict = {}
+    for fl in args.argfile:
+        argdict = deep_update(argdict, load_yaml(fl))
+    del args.argfile
+    argdict.update(vars(args))
+    
+    from deepks2.flow.submit_deepks_train import submit_deepks_train
+    submit_deepks_train(**argdict)
 
 
 if __name__ == "__main__":

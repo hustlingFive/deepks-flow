@@ -2,7 +2,7 @@ scf_abacus:
   #INPUT args
   ntype: 2
   ecutwfc: 100
-  scf_thr: 5e-7
+  scf_thr: 5.0e-7
   scf_nmax: 50
   dft_functional: "pbe"
   gamma_only: 1
@@ -23,7 +23,7 @@ init_scf_abacus:
   proj_file: ["jle.orb"]
   ntype: 2
   ecutwfc: 100
-  scf_thr: 1e-7
+  scf_thr: 1.0e-7
   scf_nmax: 50
   dft_functional: "pbe"
   gamma_only: 1 

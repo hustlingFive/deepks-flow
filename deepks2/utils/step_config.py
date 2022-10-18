@@ -1,4 +1,3 @@
-import dargs
 from dargs import (
     Argument,
     Variant,
@@ -91,7 +90,7 @@ def init_executor(
         return None
     etype = executor_dict.pop('type')
     if etype == "lebesgue_v2":
-        return LebesgueExecutor(**executor_dict)
+        return LebesgueExecutor(executor="lebesgue_v2", **executor_dict)
     else:
         raise RuntimeError('unknown executor type', etype)    
     

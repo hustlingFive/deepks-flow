@@ -17,10 +17,9 @@ Considering your python environment, maybe you should install some python packag
 ```
 pip install -r requirements.txt
 ```
-We need to build the latest version of `dflow`.
-(This step added at 2022.9.1, maybe do not need do this after they upload the latest version to pip.)  
+Then, it's time to install DeePKS-kit. This branch "abacus" works with ABACUS. 
 ```
-pip install git+https://github.com/deepmodeling/dflow
+pip install git+https://github.com/deepmodeling/deepks-kit@abacus
 ```
 Then, install the deepks2, which is a DeePKS + ABACUS iteration workflow using dflow.
 ```
@@ -29,10 +28,11 @@ cd ./example/water_single_lda2pbe_abacus/iter
 ```
 Before you submit the example, you may regist a [Bohrium](https://bohrium.dp.tech) account and should modify some args around the end of `base_args.yaml`.
 
-- `scf_machine:program_id; train_machine:program_id; lebesgue_context_config:extra:program_id`: input your program ID of your Bohrium program.
-- `username`: input your Bohrium login account.
-- `password`: input your Bohrium login password.
-- `upload_python_package`: /path/to/deepks2 which you have just installed.
+- `scf_machine:program_id; train_machine:program_id; lebesgue_context_config:extra:program_id`: Input your program ID of your Bohrium program.
+- `username`: Input your Bohrium login account.
+- `password`: Input your Bohrium login password.
+- `upload_python_package`: /path/to/deepks2 and /path/to/deepks which you have just installed.
+- `dflow_config`: Write down your `host` and `s3_endpoint` of argo. See [dflow](https://github.com/deepmodeling/dflow) and [workflow_dp](http://39.106.93.187:32746/help) for recommendation.
 
 Now it's time to submit your workflow!
 ```

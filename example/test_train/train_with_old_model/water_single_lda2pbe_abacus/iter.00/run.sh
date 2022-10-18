@@ -1,0 +1,1 @@
+deepks2 train dflow_bohrium_args.yaml params_dflow.yaml
