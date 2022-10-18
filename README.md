@@ -28,11 +28,11 @@ cd ./example/water_single_lda2pbe_abacus/iter
 ```
 Before you submit the example, you may regist a [Bohrium](https://bohrium.dp.tech) account and should modify some args around the end of `base_args.yaml`.
 
-- `scf_machine:program_id; train_machine:program_id; lebesgue_context_config:extra:program_id`: Input your program ID of your Bohrium program.
-- `username`: Input your Bohrium login account.
-- `password`: Input your Bohrium login password.
+- `bohrium_program_id`: Input your program ID of your Bohrium program.
+- `bohrium_account_name`: Input your Bohrium login account.
+- `bohrium_account_password`: Input your Bohrium login password.
 - `upload_python_package`: /path/to/deepks2 and /path/to/deepks which you have just installed.
-- `dflow_config`: Write down your `host` and `s3_endpoint` of argo. See [dflow](https://github.com/deepmodeling/dflow) and [workflow_dp](http://39.106.93.187:32746/help) for recommendation.
+- `dflow_config_host` and `dflow_config_s3_endpoint`: Write down your `host` and `s3_endpoint` of argo. See [dflow](https://github.com/deepmodeling/dflow) and [workflow_dp](http://39.106.93.187:32746/help) for recommendation.
 
 Now it's time to submit your workflow!
 ```
@@ -53,7 +53,7 @@ Simple as you can see above, this workflow have got three main achievement:
   
 While using the dflow, we can specify every OP to use slurm, Bohrium or locol machine. But we do not need to make the OP environment because it is running in a well prepared image.All you need to do is preparing your input data and run.
 
-### Step and OP design
+### Step and OP design(Outdated)
 <div align=center>
 <img src="./image/2022-08-30-17-50-05.png" width="700">
 </div>
