@@ -34,7 +34,6 @@ from deepks2.op.iter_op.convert_scf_op import ConvertScfAbacus
 from deepks2.op.iter_op.gather_scf_op import GatherStatsScfAbacus
 from deepks2.op.iter_op.scf_abacus_op import PrepScfAbacus,RunScfAbacus
 from deepks2.op.iter_op.train_op import PrepTrain,RunTrain
-
 from deepks2.step.iter_step import (
     PrepRunTrain,
     ScfAbacus,
@@ -52,7 +51,7 @@ def workflow_iterate(systems_train=None, systems_test=None,n_iter = 0,
                  cleanup=False, strict=True, no_test=False,
                  use_abacus=False, scf_abacus=None, init_scf_abacus=None,#caoyu add 2021-07-22
                  dflow_config=None, lebesgue_context_config=None, upload_python_package = None,
-                 default_config = None, **kwargs):
+                 default_config = None,compound = None, **kwargs):
     train_only = False
     scf_yaml_name = INIT_SCF_NAME
     train_yaml_name = INIT_TRN_NAME

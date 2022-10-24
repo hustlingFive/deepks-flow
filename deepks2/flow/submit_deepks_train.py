@@ -36,14 +36,7 @@ from deepks2.utils.arg_utils import deep_update
 from deepks2.utils.collect_inputs import check_arg_dict, collect_inputs, collect_systems
 from deepks2.utils.step_config import normalize as normalize_step_dict
 
-from deepks2.op.iter_op import (
-    ConvertScfAbacus,
-    GatherStatsScfAbacus,
-    PrepScfAbacus,
-    RunScfAbacus,
-    PrepTrain,
-    RunTrain
-)
+from deepks2.op.iter_op.train_op import PrepTrain,RunTrain
 from deepks2.step.iter_step import (
     PrepRunTrain,
 )

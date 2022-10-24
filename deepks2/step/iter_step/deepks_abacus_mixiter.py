@@ -27,10 +27,10 @@ from dflow.python import(
 from typing import (
     List
 )
-from pathlib import Path
 from deepks2.utils.step_config import normalize as normalize_step_dict
 from deepks2.utils.step_config import init_executor
 from deepks2.constants import (SCF_ARGS_NAME,INIT_SCF_NAME,TRN_ARGS_NAME,INIT_TRN_NAME)
+from deepks2.op.iter_op.gather_scf_op import GatherMixScfAbacus
 
 from copy import deepcopy
 
@@ -91,12 +91,13 @@ class MakeBlockId(OP):
             train_name = TRN_ARGS_NAME
         return name, scf_name, train_name
 
-class DeepksAbacusIter(Steps):
+class DeepksAbacusMixIter(Steps):
     def __init__(
             self,
             name : str,
             scf_op : OP,
             train_op : OP,
+            mixed_num : int,
             assistant_config : dict = normalize_step_dict({}),
             upload_python_package : str = None,
     ):
@@ -110,9 +111,9 @@ class DeepksAbacusIter(Steps):
         }
         self._input_artifacts={
             "model": InputArtifact(optional=True),
-            "system" : InputArtifact(),
-            "config_file": InputArtifact(),
-            "stru_file" : InputArtifact(),
+            "systems" : InputArtifact(),
+            "config_files": InputArtifact(),
+            "stru_files" : InputArtifact(),
         }
         self._output_parameters={
         }
@@ -134,39 +135,31 @@ class DeepksAbacusIter(Steps):
             ),
         )
 
-        # self._my_keys = ["convert-scf","gather-scf"]
-        # self._keys = \
-        #     self._my_keys[:1] + \
-        #     scf_op.keys + \
-        #     self._my_keys[1:2]+ \
-        #     train_op.keys 
-        #     # self._my_keys[0]
-
-
-        # self.step_keys = {}
-        # for ii in self._my_keys:
-        #     self.step_keys[ii] = "--".join(
-        #         ["%s"%self.inputs.parameters["block_id"], ii]
-        #     )
-        self._my_keys = ["id"]
+        self._my_keys = ["mix-scf","gather-mix","id"]
         # self._my_keys = ["iter"]
         self._keys = \
-            scf_op.keys + \
+            self._my_keys[:1] + \
+            self._my_keys[1:2] + \
             train_op.keys + \
-            self._my_keys[:1]
-        self.iter_key = "loop"
+            self._my_keys[2:3]
+        self.iter_key = "mix-iter"
         self.step_keys = {}
         for ii in self._my_keys:
             self.step_keys[ii] = "--".join(
                 ["%s" % self.inputs.parameters["block_id"], ii]
             )
+        ii = "mix-scf"
+        self.step_keys[ii] = '--'.join(
+            ["%s" % self.inputs.parameters["block_id"], ii + "-{{item}}"]
+        )
 
-        self = _iter(
+        self = _mixiter(
             self,
             self.step_keys,
             name,
             scf_op,
             train_op,
+            mixed_num,
             assistant_config=assistant_config,
             upload_python_package = upload_python_package,
         )
@@ -196,23 +189,31 @@ class DeepksAbacusIter(Steps):
         return [self.iter_key] + self.iter.keys
 
 
-def _iter(
+def _mixiter(
         steps : Steps,
         step_keys : List[str],
         name : str,
         scf_op : OP,
         train_op : OP,
+        mixed_num: int,
         assistant_config: dict = normalize_step_dict({}),
-        upload_python_package: str = None
+        upload_python_package: str = None,
 ):
     assistant_config = deepcopy(assistant_config)
     assistant_template_config = assistant_config.pop("template_config")
     assistant_executor = assistant_config.pop("executor")
     assistant_executor = init_executor(assistant_executor)
-        
-    scf = Step(
-        name = name + "-scf",
-        template = scf_op,
+
+    scf_abacus = Step(
+        name=name + "-run-scf-abacus",
+        template=PythonOPTemplate(
+            scf_op,
+            slices=Slices(
+                "{{item}}",
+                input_artifact=["systems","config_files","stru_files"],
+                output_artifact=["00_scf"],
+            ),
+        ),
         parameters={
             "block_id" : steps.inputs.parameters["block_id"],
             "yaml_name" : steps.inputs.parameters["scf_yaml_name"],
@@ -220,13 +221,33 @@ def _iter(
         },
         artifacts={
             "model" : steps.inputs.artifacts["model"],
-            "system": steps.inputs.artifacts["system"], 
-            "config_file": steps.inputs.artifacts["config_file"], 
-            "stru_file" : steps.inputs.artifacts["stru_file"]        
+            "system": steps.inputs.artifacts["systems"], 
+            "config_file": steps.inputs.artifacts["config_files"], 
+            "stru_file" : steps.inputs.artifacts["stru_files"]        
         },
-        key = "--".join(["%s"%steps.inputs.parameters["block_id"], "scf"]),
+        with_param=argo_range(mixed_num),
+        key=step_keys["mix-scf"],
+        util_image=assistant_template_config.get("image"),
     )
-    steps.add(scf)
+    steps.add(scf_abacus)
+
+    gather_mix_scf = Step(
+        name=name + "-gather-mix-scf",
+        template=PythonOPTemplate(
+            GatherMixScfAbacus,
+            python_packages=upload_python_package,
+            **assistant_template_config,
+        ),
+        parameters={
+        },
+        artifacts={
+            "00_scfs":scf_abacus.outputs.artifacts["00_scf"]
+        },
+        key=step_keys["gather-mix"],
+        executor=assistant_executor,
+        **assistant_config,
+    )
+    steps.add(gather_mix_scf)
 
     train = Step(
         name = name + "-train",
@@ -238,7 +259,7 @@ def _iter(
             "no_test": steps.inputs.parameters["no_test"],
         },
         artifacts={
-            "00_scf": scf.outputs.artifacts["00_scf"], 
+            "00_scf": gather_mix_scf.outputs.artifacts["00_scf"], 
             "model": steps.inputs.artifacts["model"], 
             "config_file": steps.inputs.artifacts["config_file"], 
         },
@@ -294,7 +315,7 @@ def _iter(
     steps.outputs.artifacts["00_scf"].from_expression = \
         if_expression(
             _if = (block_id_step.outputs.parameters["go_ahead"] == False),
-            _then = scf.outputs.artifacts["00_scf"],
+            _then = gather_mix_scf.outputs.artifacts["00_scf"],
             _else = next_step.outputs.artifacts["00_scf"],
         )
     steps.outputs.artifacts["01_train"].from_expression = \

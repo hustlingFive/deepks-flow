@@ -29,14 +29,9 @@ from dflow.python import (
 from deepks2.utils.collect_inputs import check_arg_dict, collect_inputs
 from deepks2.utils.step_config import normalize as normalize_step_dict
 
-from deepks2.op.iter_op import (
-    ConvertScfAbacus,
-    GatherStatsScfAbacus,
-    PrepScfAbacus,
-    RunScfAbacus,
-    PrepTrain,
-    RunTrain
-)
+from deepks2.op.iter_op.convert_scf_op import ConvertScfAbacus
+from deepks2.op.iter_op.gather_scf_op import GatherStatsScfAbacus
+from deepks2.op.iter_op.scf_abacus_op import PrepScfAbacus,RunScfAbacus
 from deepks2.step.iter_step import (
     ScfAbacus,
 )
