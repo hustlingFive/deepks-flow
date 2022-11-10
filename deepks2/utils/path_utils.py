@@ -58,6 +58,16 @@ def link_file(src, dst, use_abs=False):
         os.remove(dst)
         os.symlink(src_path, dst)
 
+def copy_dir(src, dst, use_abs=False):
+    src, dst = Path(src), Path(dst)
+    assert src.exists(), f'{src} does not exist'
+    src_path = os.path.abspath(src) if use_abs else os.path.relpath(src, dst.parent)
+    if not dst.exists():
+        if not dst.parent.exists():
+            os.makedirs(dst.parent)
+        shutil.copytree(src_path, dst)
+    elif not os.path.samefile(src, dst):
+        shutil.copytree(src_path, dst, dirs_exist_ok=True)
 
 def copy_file(src, dst):
     src, dst = Path(src), Path(dst)

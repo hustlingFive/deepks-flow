@@ -1,0 +1,37 @@
+# scf_abacus.yaml
+scf_abacus:
+  #INPUT args
+  ntype: 2
+  ecutwfc: 60
+  scf_thr: 5.0e-7
+  scf_nmax: 300
+  dft_functional: "pbe"
+  gamma_only: 0
+  cal_force: 1
+  mixing_type: pulay
+  mixing_beta: 0.4
+  #cmd args
+  run_cmd : "mpirun"
+  abacus_path: "/usr/local/bin/abacus"
+  cpus_per_task: 8
+  group_size: 50
+
+# init_scf_abacus.yaml
+init_scf_abacus:
+  ntype: 2
+  ecutwfc: 60
+  scf_thr: 1.0e-7
+  scf_nmax: 300
+  dft_functional: "pbe"
+  gamma_only: 0
+  cal_force: 1
+  mixing_type: pulay
+  mixing_beta: 0.4
+  #cmd args
+  run_cmd : "mpirun"
+  abacus_path: "/usr/local/bin/abacus"
+  cpus_per_task: 8
+  group_size: 50
+
+compounds : ["00AgCl","01AlN", '02Au2S', '03BN', '04C', '05CsPbI3', '06Cu3N', '07CuBr','08CuHO', '09GaN', '10InP', '11LiHO', '12LiI', '13MgO', '14PtS']
+compounds_yaml: ["systems.yaml","scf_abacus.yaml"]

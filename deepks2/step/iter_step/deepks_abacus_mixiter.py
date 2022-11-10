@@ -27,6 +27,7 @@ from dflow.python import(
 from typing import (
     List
 )
+from deepks2.step.iter_step.scf_abacus import ScfAbacus
 from deepks2.utils.step_config import normalize as normalize_step_dict
 from deepks2.utils.step_config import init_executor
 from deepks2.constants import (SCF_ARGS_NAME,INIT_SCF_NAME,TRN_ARGS_NAME,INIT_TRN_NAME)
@@ -112,7 +113,8 @@ class DeepksAbacusMixIter(Steps):
         self._input_artifacts={
             "model": InputArtifact(optional=True),
             "systems" : InputArtifact(),
-            "config_files": InputArtifact(),
+            "scf_config_files": InputArtifact(),
+            "train_config_files": InputArtifact(),
             "stru_files" : InputArtifact(),
         }
         self._output_parameters={
@@ -206,13 +208,11 @@ def _mixiter(
 
     scf_abacus = Step(
         name=name + "-run-scf-abacus",
-        template=PythonOPTemplate(
-            scf_op,
-            slices=Slices(
-                "{{item}}",
-                input_artifact=["systems","config_files","stru_files"],
-                output_artifact=["00_scf"],
-            ),
+        template=scf_op,
+        slices=Slices(
+            "{{item}}",
+            input_artifact=["system","config_file","stru_file"],
+            output_artifact=["00_scf"],
         ),
         parameters={
             "block_id" : steps.inputs.parameters["block_id"],
@@ -222,7 +222,7 @@ def _mixiter(
         artifacts={
             "model" : steps.inputs.artifacts["model"],
             "system": steps.inputs.artifacts["systems"], 
-            "config_file": steps.inputs.artifacts["config_files"], 
+            "config_file": steps.inputs.artifacts["scf_config_files"], 
             "stru_file" : steps.inputs.artifacts["stru_files"]        
         },
         with_param=argo_range(mixed_num),
@@ -261,7 +261,7 @@ def _mixiter(
         artifacts={
             "00_scf": gather_mix_scf.outputs.artifacts["00_scf"], 
             "model": steps.inputs.artifacts["model"], 
-            "config_file": steps.inputs.artifacts["config_file"], 
+            "config_file": steps.inputs.artifacts["train_config_files"], 
         },
         key = "--".join(["%s"%steps.inputs.parameters["block_id"], "train"]),
     )
@@ -298,9 +298,10 @@ def _mixiter(
         },
         artifacts={
             "model": train.outputs.artifacts["model"],
-            "system": steps.inputs.artifacts["system"],
-            "config_file": steps.inputs.artifacts["config_file"],
-            "stru_file": steps.inputs.artifacts["stru_file"],
+            "systems": steps.inputs.artifacts["systems"],
+            "scf_config_files": steps.inputs.artifacts["scf_config_files"],
+            "train_config_files": steps.inputs.artifacts["train_config_files"],
+            "stru_files": steps.inputs.artifacts["stru_files"],
         },
         when="%s == true" % (block_id_step.outputs.parameters["go_ahead"]),
     )

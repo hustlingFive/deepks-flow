@@ -1,0 +1,26 @@
+scf_abacus:
+  #STRU args ( Here are default STRU args, you can set for each group in  ../systems/group.xx/stru_abacus.yaml )
+  orb_files: ["Cs_gga_11au_60Ry_4s2p1d.orb","Pb_gga_9au_60Ry_2s2p2d.orb","I_gga_8au_60Ry_2s2p2d.orb"]
+  pp_files: ["Cs_ONCV_PBE-1.0.upf", "Pb_ONCV_PBE-1.0.upf","I_ONCV_PBE-1.0.upf"]
+  proj_file: ["jle.orb"]
+  k_points: [4, 4, 4, 0, 0, 0]
+  lattice_constant: 1.88972613 
+  lattice_vector: [[6.4141449928, 0, 0], [0,6.4141449928,0], [0, 0, 6.4141449928]]
+  smearing_sigma: 0.01
+  scf_nmax: 50
+  mixing_type: pulay
+  ntype: 3
+
+
+init_scf_abacus:
+  #STRU args ( Here are default STRU args, you can set for each group in  ../systems/group.xx/stru_abacus.yaml )
+  orb_files: ["Cs_gga_11au_60Ry_4s2p1d.orb","Pb_gga_9au_60Ry_2s2p2d.orb","I_gga_8au_60Ry_2s2p2d.orb"]
+  pp_files: ["Cs_ONCV_PBE-1.0.upf", "Pb_ONCV_PBE-1.0.upf","I_ONCV_PBE-1.0.upf"]
+  proj_file: ["jle.orb"]
+  k_points: [4, 4, 4, 0, 0, 0]
+  lattice_constant: 1.88972613 
+  lattice_vector: [[6.4141449928, 0, 0], [0,6.4141449928,0], [0, 0, 6.4141449928]]
+  smearing_sigma: 0.01
+  scf_nmax: 50
+  mixing_type: pulay
+  ntype: 3

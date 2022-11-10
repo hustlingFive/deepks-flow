@@ -1,0 +1,99 @@
+ AUTO_SET ks_solver to genelpa
+ Input  warning : gamma_only_local algorithm is not used.
+ AUTO_SET lcao_ecut to 60
+ smearing_decision  warning : Fixed occupations,gauss broadening ignored
+ AUTO_SET gaussian_parameter to 0
+ In SCAN_BEGIN, can't find: LATTICE_PARAMETERS block.
+ In SCAN_BEGIN, can't find: <PP_SPIN_ORB> block.
+ In SCAN_END, can't find: </PP_SPIN_ORB> block.
+ In SCAN_END, can't find: </UPF> block.
+ dft_functional readin is: pbe
+ dft_functional in pseudopot file is: PBE
+ In SCAN_BEGIN, can't find: <PP_SPIN_ORB> block.
+ In SCAN_END, can't find: </PP_SPIN_ORB> block.
+ In SCAN_END, can't find: </UPF> block.
+ dft_functional readin is: pbe
+ dft_functional in pseudopot file is: PBE
+ AUTO_SET NBANDS to 0
+ AUTO_SET NBANDS to 41
+ functional  warning : file ./src_pw/xc_type.cpp line 297 may error 
+ functional  warning : file ./src_pw/xc_type.cpp line 297 may error 
+                            startmag_type = 1
+                       charge from rho_at = 18.9734
+                         charge should be = 19
+                       charge from rho_at = 4.99741
+                         charge should be = 5
+
+ SETUP ATOMIC RHO FOR SPIN 1
+                 Electron number from rho = 62
+           total electron number from rho = 62
+                                should be = 62
+                 charge before normalized = 61.9999999999999
+                  charge after normalized = 62
+      Processor           Atom
+              1             46
+              2             45
+              3             45
+              4             45
+              5             45
+              6             44
+              7             44
+              8             44
+              9             44
+             10             44
+             11             45
+             12             45
+             13             47
+             14             45
+             15             44
+             16             46
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 62.0007388222288
+                  charge after normalized = 62
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 62.0007236548934
+                  charge after normalized = 62
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 62.0007261822452
+                  charge after normalized = 62
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 62.000727153678
+                  charge after normalized = 62
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 62.0007262082767
+                  charge after normalized = 62
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 62.0007261231406
+                  charge after normalized = 62
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 62.000726149128
+                  charge after normalized = 62
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 62.0007261546157
+                  charge after normalized = 62
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 62.000726154988
+                  charge after normalized = 62
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 62.000726154276
+                  charge after normalized = 62
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 62.0007261543562
+                  charge after normalized = 62
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 62.0007261543334
+                  charge after normalized = 62
+                 charge before normalized = 62
+                  charge after normalized = 62

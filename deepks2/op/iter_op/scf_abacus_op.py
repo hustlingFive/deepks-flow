@@ -27,7 +27,7 @@ class PrepScfAbacus(OP):
         return OPIOSign({
             "yaml_name" : str,
             "config_file" : Artifact(Path),
-            "system" : Artifact(Path),
+            "tasks" : Artifact(Path),
         })
 
     @classmethod
@@ -45,7 +45,7 @@ class PrepScfAbacus(OP):
         # OP input
         yaml_name = ip["yaml_name"]
         config_file = ip["config_file"]
-        system = ip["system"]
+        system = ip["tasks"]
 
         prep_scf_config = load_yaml(config_file/yaml_name)
 

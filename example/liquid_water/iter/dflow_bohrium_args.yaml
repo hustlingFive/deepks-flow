@@ -4,8 +4,8 @@ bohrium_account_password: &bohrium_account_password "xxx"
 bohrium_program_id: &bohrium_program_id "xxx"  # this arg should be string type
 dflow_config_host: &dflow_config_host "xxx"
 dflow_config_s3_endpoint: &dflow_config_s3_endpoint "xxx"
-upload_python_package : ["/opt/homebrew/anaconda3/envs/dflow2/lib/python3.9/site-packages/deepks2",
-  "/opt/homebrew/anaconda3/envs/dflow2/lib/python3.9/site-packages/deepks"]
+upload_python_package : ["/path/to/deepks2",
+  "/path/to/deepks"]
 
 scf_abacus:
   cpus_per_task: 64

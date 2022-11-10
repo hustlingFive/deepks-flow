@@ -78,6 +78,7 @@ def workflow_scf_abacus(systems_train = None, systems_test = None,
 
         scf_op = ScfAbacus(
             "prep-run-scf-abacus",
+            False,
             ConvertScfAbacus,
             PrepScfAbacus,
             RunScfAbacus,

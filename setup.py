@@ -11,7 +11,7 @@ install_requires=['numpy', 'paramiko', 'ruamel.yaml', 'pytest-shutil', 'pydflow'
 
 setuptools.setup(
     name="deepks2",
-    version="1.1",
+    version="1.2",
     setup_requires=['setuptools_scm'],
     author="Yifan Shan",
     author_email="xiaoshan@mail.ustc.edu.cn",

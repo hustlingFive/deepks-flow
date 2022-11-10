@@ -1,0 +1,140 @@
+ *********************************************************
+ *                                                       *
+ *                  WELCOME TO ABACUS                    *
+ *                                                       *
+ *            'Atomic-orbital Based Ab-initio            *
+ *                  Computation at UStc'                 *
+ *                                                       *
+ *          Website: http://abacus.ustc.edu.cn/          *
+ *                                                       *
+ *********************************************************
+ Wed Apr  6 22:27:05 2022
+ MAKE THE DIR         : OUT.ABACUS/
+ dft_functional readin is: pbe
+ dft_functional in pseudopot file is: PBE
+In Pseudopot_upf::read_pseudo_header : input xc functional does not match that in pseudopot file
+Please make sure this is what you need
+ DONE(0.0177982  SEC) : SETUP UNITCELL
+ DONE(0.0187028  SEC) : INIT K-POINTS
+ ---------------------------------------------------------
+ Self-consistent calculations for electrons
+ ---------------------------------------------------------
+ SPIN    KPOINTS         PROCESSORS  NBASE       
+ 1       64              8           26          
+ ---------------------------------------------------------
+ Use Systematically Improvable Atomic bases
+ ---------------------------------------------------------
+ ELEMENT ORBITALS        NBASE       NATOM       XC          
+ C       2s2p1d-8au      13          2           PBE
+ ---------------------------------------------------------
+ Initial plane wave basis and FFT box
+ ---------------------------------------------------------
+ SET NONLOCAL PSEUDOPOTENTIAL PROJECTORS
+ DONE(2.85147    SEC) : INIT PLANEWAVE
+ UNIFORM GRID DIM     : 24 * 24 * 24
+ UNIFORM GRID DIM(BIG): 12 * 12 * 12
+ DONE(2.85169    SEC) : INIT CHARGE
+ DONE(2.85176    SEC) : INIT POTENTIAL
+ START POTENTIAL      : atomic
+ -------------------------------------------
+ SELF-CONSISTENT : 
+ -------------------------------------------
+ ITER   ETOT(eV)       EDIFF(eV)      DRHO2      TIME(s)    
+ HOMO index is 0
+ HOMO energy 0.985294
+ LUMO index is 1296674272
+ LUMO energy 1.20231
+ GE1    -3.092513e+02  0.000000e+00   1.534e-01  5.097e+00  
+ HOMO index is 0
+ HOMO energy 9.928e-01
+ LUMO index is 1296674272
+ LUMO energy 1.208e+00
+ GE2    -3.094057e+02  -1.544049e-01  7.535e-02  1.440e+01  
+ HOMO index is 0
+ HOMO energy 1.035e+00
+ LUMO index is 1296674272
+ LUMO energy 1.242e+00
+ GE3    -3.095072e+02  -1.014930e-01  1.170e-02  1.436e+01  
+ HOMO index is 0
+ HOMO energy 1.040e+00
+ LUMO index is 1296674272
+ LUMO energy 1.245e+00
+ GE4    -3.095304e+02  -2.315984e-02  3.653e-03  1.419e+01  
+ HOMO index is 0
+ HOMO energy 1.037e+00
+ LUMO index is 1296674272
+ LUMO energy 1.243e+00
+ GE5    -3.095342e+02  -3.875325e-03  4.909e-05  1.427e+01  
+ HOMO index is 0
+ HOMO energy 1.037e+00
+ LUMO index is 1296674272
+ LUMO energy 1.243e+00
+ GE6    -3.095328e+02  1.446931e-03   4.858e-05  1.433e+01  
+ HOMO index is 0
+ HOMO energy 1.037e+00
+ LUMO index is 1296674272
+ LUMO energy 1.243e+00
+ GE7    -3.095328e+02  4.259430e-05   9.970e-06  1.468e+01  
+ HOMO index is 0
+ HOMO energy 1.037e+00
+ LUMO index is 1296674272
+ LUMO energy 1.243e+00
+ GE8    -3.095328e+02  -9.962500e-06  2.199e-07  1.443e+01  
+E_delta_band = -2.50524204e-01 Ry = -3.40855667e+00 eV
+E_delta_NN= -9.25560398e-03 Ry = -1.25928953e-01 eV
+
+  |CLASS_NAME---------|NAME---------------|TIME(Sec)-----|CALLS----|AVG------|PER%-------
+                       total               196.66         11        18        1e+02     %
+   Run_lcao            lcao_line           196.65         1         2e+02     1e+02     %
+   ORB_control         read_orb_first      0.49025        1         0.49      0.25      %
+   LCAO_Orbitals       Read_Orbitals       0.49025        1         0.49      0.25      %
+   NOrbital_Lm         extra_uniform       0.39341        50        0.0079    0.2       %
+   Mathzone_Add1       Uni_Deriv_Phi       0.37659        50        0.0075    0.19      %
+   ORB_control         set_orb_tables      2.3311         1         2.3       1.2       %
+   ORB_gen_tables      gen_tables          2.3311         1         2.3       1.2       %
+   ORB_table_phi       init_Table          0.34777        1         0.35      0.18      %
+   ORB_table_phi       cal_ST_Phi12_R      0.34415        70        0.0049    0.18      %
+   ORB_table_alpha     init_Table_Alpha    1.7046         1         1.7       0.87      %
+   ORB_table_alpha     S_PhiAlpha_R        1.6913         330       0.0051    0.86      %
+   LOOP_ions           opt_ions            193.74         1         1.9e+02   99        %
+   LOOP_elec           solve_elec_stru     106.18         1         1.1e+02   54        %
+   LOOP_elec           before_solver       0.27921        1         0.28      0.14      %
+   LCAO_Hamilt         set_lcao_matrices   0.11323        1         0.11      0.058     %
+   LCAO_gen_fixedH     build_Nonlocal_mu_new0.22514        2         0.11      0.11      %
+   LCAO_Deepks         build_psialpha      0.16486        1         0.16      0.084     %
+   ORB_gen_tables      snap_psialpha_half  0.1474         3432      4.3e-05   0.075     %
+   LOOP_elec           solver              105.85         1         1.1e+02   54        %
+   ELEC_scf            scf                 105.85         1         1.1e+02   54        %
+   ELEC_cbands_k       cal_bands           102.47         8         13        52        %
+   LCAO_Deepks         cal_projected_DM_k  43.888         10        4.4       22        %
+   LCAO_DESCRIPTOR     add_v_delta_k       27.97          8         3.5       14        %
+   Gint_k              vlocal              5.4147         8         0.68      2.8       %
+   Efficience          each_k              2.3818         512       0.0047    1.2       %
+   Efficience          H_k                 1.6989         512       0.0033    0.86      %
+   LCAO_Hamilt         calculate_Hk        1.6982         512       0.0033    0.86      %
+   Gint_k              folding_vl_k        0.74103        512       0.0014    0.38      %
+   Gint_k              Distri              0.60302        512       0.0012    0.31      %
+   LCAO_nnr            folding_fixedH      0.95598        512       0.0019    0.49      %
+   Efficience          diago_k             0.68253        512       0.0013    0.35      %
+   Diago_LCAO_Matrix   elpa_solve          0.62751        512       0.0012    0.32      %
+   Local_Orbital_Cha   sum_bands           3.2635         8         0.41      1.7       %
+   LCAO_Charge         cal_dk_k            0.52359        8         0.065     0.27      %
+   Gint_k              cal_rho_k           2.4536         8         0.31      1.2       %
+   LOOP_ions           force_stress        78.151         1         78        40        %
+   Force_Stress_LCAO   getForceStress      78.151         1         78        40        %
+   Force_LCAO_k        ftable_k            25.262         1         25        13        %
+   Force_LCAO_k        allocate_k          0.22334        1         0.22      0.11      %
+   Force_LCAO_k        set_EDM_k           0.11998        2         0.06      0.061     %
+   Force_LCAO_k        cal_fvl_dphi_k      3.6446         1         3.6       1.9       %
+   Gint_k              svl_k_RealSpace     3.638          1         3.6       1.8       %
+   Gint_k              evaluate_vl_force   3.2571         288       0.011     1.7       %
+   Gint_k              folding_force       0.28335        1         0.28      0.14      %
+   Force_LCAO_k        cal_fvnl_dbeta_k_new0.44285        1         0.44      0.23      %
+   LCAO_Deepks         cal_f_delta_hf_k_new10.886         1         11        5.5       %
+   LCAO_Deepks         cal_gdmx_k          52.868         1         53        27        %
+ ----------------------------------------------------------------------------------------
+
+ START  Time  : Wed Apr  6 22:27:05 2022
+ FINISH Time  : Wed Apr  6 22:30:21 2022
+ TOTAL  Time  : 2e+02
+ SEE INFORMATION IN : OUT.ABACUS/

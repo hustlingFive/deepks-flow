@@ -1,0 +1,8 @@
+F_delta(Hatree/Bohr) from deepks model: 
+        type        atom           dF_x           dF_y           dF_z
+          Mg           0    0.000234724   -0.000273835    0.000243645
+           O           0   -0.000234724    0.000273835   -0.000243645
+F_delta(eV/Angstrom) from deepks model: 
+        type        atom           dF_x           dF_y           dF_z
+          Mg           0        0.01207     -0.0140812      0.0125288
+           O           0       -0.01207      0.0140812     -0.0125288

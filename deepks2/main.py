@@ -29,6 +29,8 @@ def main_cli(args=None):
         sub_cli = scf_cli
     elif args.command.upper().startswith("TRAIN"):
         sub_cli = train_cli
+    elif args.command.upper().startswith("MIX"):
+        sub_cli = mixiter_cli
     else:
         return ValueError(f"unsupported sub-command: {args.command}")
     
@@ -116,6 +118,25 @@ def train_cli(args=None):
     from deepks2.flow.submit_deepks_train import submit_deepks_train
     submit_deepks_train(**argdict)
 
+def mixiter_cli(args=None):
+    parser = argparse.ArgumentParser(
+                prog="deepks2 mixiter",
+                description="Run the iteration procedure to train a mixed SCF model.",
+                argument_default=argparse.SUPPRESS)
+    parser.add_argument("argfile", nargs="*", default=[],
+                        help='the input yaml file for args, '
+                             'if more than one, the latter has higher priority')
+    # parser.add_argument("-m", "--init-model", nargs="*",
+    #                     help='if set, scf_abacus will load an existing model')
+    args = parser.parse_args(args)
+    argdict = {}
+    for fl in args.argfile:
+        argdict = deep_update(argdict, load_yaml(fl))
+    del args.argfile
+    argdict.update(vars(args))
+    
+    from deepks2.flow.submit_mixiter import submit_mixiter
+    submit_mixiter(**argdict)
 
 if __name__ == "__main__":
     main_cli()

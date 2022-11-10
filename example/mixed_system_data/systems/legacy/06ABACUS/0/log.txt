@@ -1,0 +1,174 @@
+ *********************************************************
+ *                                                       *
+ *                  WELCOME TO ABACUS                    *
+ *                                                       *
+ *            'Atomic-orbital Based Ab-initio            *
+ *                  Computation at UStc'                 *
+ *                                                       *
+ *          Website: http://abacus.ustc.edu.cn/          *
+ *                                                       *
+ *********************************************************
+ Wed Apr  6 22:37:58 2022
+ MAKE THE DIR         : OUT.ABACUS/
+ dft_functional readin is: pbe
+ dft_functional in pseudopot file is: PBE
+In Pseudopot_upf::read_pseudo_header : input xc functional does not match that in pseudopot file
+Please make sure this is what you need
+ dft_functional readin is: pbe
+ dft_functional in pseudopot file is: PBE
+In Pseudopot_upf::read_pseudo_header : input xc functional does not match that in pseudopot file
+Please make sure this is what you need
+ DONE(0.0447597  SEC) : SETUP UNITCELL
+ DONE(0.0488046  SEC) : INIT K-POINTS
+ ---------------------------------------------------------
+ Self-consistent calculations for electrons
+ ---------------------------------------------------------
+ SPIN    KPOINTS         PROCESSORS  NBASE       
+ 1       125             16          94          
+ ---------------------------------------------------------
+ Use Systematically Improvable Atomic bases
+ ---------------------------------------------------------
+ ELEMENT ORBITALS        NBASE       NATOM       XC          
+ Cu      4s2p2d1f-9au    27          3           PBE
+ N       2s2p1d-8au      13          1           PBE
+ ---------------------------------------------------------
+ Initial plane wave basis and FFT box
+ ---------------------------------------------------------
+ SET NONLOCAL PSEUDOPOTENTIAL PROJECTORS
+ SET NONLOCAL PSEUDOPOTENTIAL PROJECTORS
+ DONE(15.7284    SEC) : INIT PLANEWAVE
+ UNIFORM GRID DIM     : 36 * 36 * 36
+ UNIFORM GRID DIM(BIG): 18 * 18 * 18
+ DONE(15.7292    SEC) : INIT CHARGE
+ DONE(15.7295    SEC) : INIT POTENTIAL
+ START POTENTIAL      : atomic
+ -------------------------------------------
+ SELF-CONSISTENT : 
+ -------------------------------------------
+ ITER   ETOT(eV)       EDIFF(eV)      DRHO2      TIME(s)    
+ HOMO index is 68
+ HOMO energy 0.755867
+ LUMO index is -124350624
+ LUMO energy 0.837993
+ GE1    -1.517086e+04  0.000000e+00   5.490e-02  1.058e+01  
+ HOMO index is 43
+ HOMO energy 8.352e-01
+ LUMO index is 77
+ LUMO energy 9.384e-01
+ GE2    -1.517285e+04  -1.987191e+00  1.790e-02  2.636e+01  
+ HOMO index is 87
+ HOMO energy 8.227e-01
+ LUMO index is 77
+ LUMO energy 9.376e-01
+ GE3    -1.517292e+04  -6.839309e-02  1.190e-02  2.654e+01  
+ HOMO index is 68
+ HOMO energy 8.261e-01
+ LUMO index is 77
+ LUMO energy 9.393e-01
+ GE4    -1.517295e+04  -3.028435e-02  1.715e-03  2.623e+01  
+ HOMO index is 87
+ HOMO energy 8.285e-01
+ LUMO index is 77
+ LUMO energy 9.409e-01
+ GE5    -1.517294e+04  3.981348e-03   6.634e-04  2.607e+01  
+ HOMO index is 87
+ HOMO energy 8.283e-01
+ LUMO index is 77
+ LUMO energy 9.408e-01
+ GE6    -1.517294e+04  3.874397e-04   2.188e-04  2.612e+01  
+ HOMO index is 68
+ HOMO energy 8.283e-01
+ LUMO index is 77
+ LUMO energy 9.407e-01
+ GE7    -1.517294e+04  -7.049354e-04  7.602e-05  2.629e+01  
+ HOMO index is 87
+ HOMO energy 8.283e-01
+ LUMO index is 77
+ LUMO energy 9.407e-01
+ GE8    -1.517294e+04  -5.193715e-05  2.089e-05  2.734e+01  
+ HOMO index is 87
+ HOMO energy 8.283e-01
+ LUMO index is 77
+ LUMO energy 9.407e-01
+ GE9    -1.517294e+04  5.564984e-06   5.562e-06  2.633e+01  
+ HOMO index is 87
+ HOMO energy 8.283e-01
+ LUMO index is 77
+ LUMO energy 9.407e-01
+ GE10   -1.517294e+04  -4.679791e-06  1.605e-06  2.623e+01  
+ HOMO index is 87
+ HOMO energy 8.283e-01
+ LUMO index is 77
+ LUMO energy 9.407e-01
+ GE11   -1.517294e+04  4.609895e-06   8.965e-07  2.629e+01  
+ HOMO index is 68
+ HOMO energy 8.283e-01
+ LUMO index is 77
+ LUMO energy 9.407e-01
+ GE12   -1.517294e+04  3.106354e-07   3.174e-07  2.610e+01  
+E_delta_band = 5.85373357e-02 Ry = 7.96441311e-01 eV
+E_delta_NN= -8.00721446e-03 Ry = -1.08943742e-01 eV
+
+  |CLASS_NAME---------|NAME---------------|TIME(Sec)-----|CALLS----|AVG------|PER%-------
+                       total               465.16         11        42        1e+02     %
+   Run_lcao            lcao_line           465.14         1         4.7e+02   1e+02     %
+   ORB_control         read_orb_first      0.809          1         0.81      0.17      %
+   LCAO_Orbitals       Read_Orbitals       0.809          1         0.81      0.17      %
+   NOrbital_Lm         extra_uniform       0.60669        59        0.01      0.13      %
+   Mathzone_Add1       Uni_Deriv_Phi       0.5656         59        0.0096    0.12      %
+   ORB_control         set_orb_tables      13.796         1         14        3         %
+   ORB_gen_tables      gen_tables          13.796         1         14        3         %
+   ORB_table_phi       init_Table          3.5404         1         3.5       0.76      %
+   ORB_table_phi       cal_ST_Phi12_R      3.475          428       0.0081    0.75      %
+   ORB_table_beta      init_Table_Beta     1.3434         1         1.3       0.29      %
+   ORB_table_beta      VNL_PhiBeta_R       1.3278         196       0.0068    0.29      %
+   ORB_table_alpha     init_Table_Alpha    8.3698         1         8.4       1.8       %
+   ORB_table_alpha     S_PhiAlpha_R        8.2783         930       0.0089    1.8       %
+   Potential           init_pot            0.80445        2         0.4       0.17      %
+   Potential           set_local_pot       0.78942        2         0.39      0.17      %
+   FFT                 FFT3D               0.82667        193       0.0043    0.18      %
+   LOOP_ions           opt_ions            449.31         1         4.5e+02   97        %
+   LOOP_elec           solve_elec_stru     301.56         1         3e+02     65        %
+   Grid_Driver         Find_atom           0.29104        12312     2.4e-05   0.063     %
+   LOOP_elec           before_solver       0.59615        1         0.6       0.13      %
+   LCAO_Hamilt         set_lcao_matrices   0.23802        1         0.24      0.051     %
+   LCAO_gen_fixedH     build_Nonlocal_mu_new0.58343        2         0.29      0.13      %
+   LCAO_Deepks         build_psialpha      0.3214         1         0.32      0.069     %
+   ORB_gen_tables      snap_psialpha_half  0.29405        2970      9.9e-05   0.063     %
+   LOOP_elec           solver              300.9          1         3e+02     65        %
+   ELEC_scf            scf                 300.9          1         3e+02     65        %
+   H_Ewald_pw          compute_ewald       0.35567        1         0.36      0.076     %
+   ELEC_cbands_k       cal_bands           272.16         12        23        59        %
+   LCAO_Deepks         cal_projected_DM_k  148.27         14        11        32        %
+   LCAO_DESCRIPTOR     add_v_delta_k       59.102         12        4.9       13        %
+   Gint_k              vlocal              13.007         12        1.1       2.8       %
+   Efficience          each_k              24.636         1500      0.016     5.3       %
+   Efficience          H_k                 11.312         1500      0.0075    2.4       %
+   LCAO_Hamilt         calculate_Hk        11.308         1500      0.0075    2.4       %
+   Gint_k              folding_vl_k        4.4201         1500      0.0029    0.95      %
+   Gint_k              Distri              2.0534         1500      0.0014    0.44      %
+   LCAO_nnr            folding_fixedH      6.8699         1500      0.0046    1.5       %
+   Efficience          diago_k             13.321         1500      0.0089    2.9       %
+   Diago_LCAO_Matrix   elpa_solve          12.065         1500      0.008     2.6       %
+   Diago_LCAO_Matrix   gath_eig_complex    0.48382        1500      0.00032   0.1       %
+   Local_Orbital_Cha   sum_bands           27.825         12        2.3       6         %
+   LCAO_Charge         cal_dk_k            16.811         12        1.4       3.6       %
+   Gint_k              cal_rho_k           7.4748         12        0.62      1.6       %
+   LOOP_ions           force_stress        131.65         1         1.3e+02   28        %
+   Force_Stress_LCAO   getForceStress      131.65         1         1.3e+02   28        %
+   Force_LCAO_k        ftable_k            54.208         1         54        12        %
+   Force_LCAO_k        allocate_k          0.90898        1         0.91      0.2       %
+   Force_LCAO_k        cal_foverlap_k      2.3967         1         2.4       0.52      %
+   Force_LCAO_k        set_EDM_k           4.6892         2         2.3       1         %
+   Force_LCAO_k        cal_fvl_dphi_k      15.314         1         15        3.3       %
+   Gint_k              svl_k_RealSpace     14.525         1         15        3.1       %
+   Gint_k              evaluate_vl_force   14.038         648       0.022     3         %
+   Force_LCAO_k        cal_fvnl_dbeta_k_new1.1336         1         1.1       0.24      %
+   LCAO_Deepks         cal_f_delta_hf_k_new16.542         1         17        3.6       %
+   LCAO_Deepks         cal_gdmx_k          77.348         1         77        17        %
+ ----------------------------------------------------------------------------------------
+
+ START  Time  : Wed Apr  6 22:37:58 2022
+ FINISH Time  : Wed Apr  6 22:45:43 2022
+ TOTAL  Time  : 4.6e+02
+ SEE INFORMATION IN : OUT.ABACUS/

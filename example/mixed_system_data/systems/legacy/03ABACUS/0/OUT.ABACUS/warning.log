@@ -1,0 +1,129 @@
+ AUTO_SET ks_solver to genelpa
+ Input  warning : gamma_only_local algorithm is not used.
+ AUTO_SET lcao_ecut to 60
+ In SCAN_BEGIN, can't find: LATTICE_PARAMETERS block.
+ In SCAN_BEGIN, can't find: <PP_SPIN_ORB> block.
+ In SCAN_END, can't find: </PP_SPIN_ORB> block.
+ In SCAN_END, can't find: </UPF> block.
+ dft_functional readin is: pbe
+ dft_functional in pseudopot file is: PBE
+ In SCAN_BEGIN, can't find: <PP_SPIN_ORB> block.
+ In SCAN_END, can't find: </PP_SPIN_ORB> block.
+ In SCAN_END, can't find: </UPF> block.
+ dft_functional readin is: pbe
+ dft_functional in pseudopot file is: PBE
+ AUTO_SET NBANDS to 0
+ AUTO_SET NBANDS to 18
+ functional  warning : file ./src_pw/xc_type.cpp line 297 may error 
+ functional  warning : file ./src_pw/xc_type.cpp line 297 may error 
+                            startmag_type = 1
+                       charge from rho_at = 2.98289
+                         charge should be = 3
+                       charge from rho_at = 4.99741
+                         charge should be = 5
+
+ SETUP ATOMIC RHO FOR SPIN 1
+                 Electron number from rho = 16
+           total electron number from rho = 16
+                                should be = 16
+                 charge before normalized = 16
+                  charge after normalized = 16
+      Processor           Atom
+              1             48
+              2             42
+              3             42
+              4             41
+              5             41
+              6             44
+              7             48
+              8             48
+              9             44
+             10             40
+             11             40
+             12             41
+             13             40
+             14             40
+             15             44
+             16             48
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000433895887
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000405565072
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000386926287
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000395855235
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000399614255
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000401370576
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000401477796
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000401959842
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000402084006
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000402121479
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000402127465
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000402125837
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000402123714
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000402123433
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000402121638
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.000040212129
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000402119979
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000402119587
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000402119395
+                  charge after normalized = 16
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 16.0000402119021
+                  charge after normalized = 16
+                 charge before normalized = 16
+                  charge after normalized = 16

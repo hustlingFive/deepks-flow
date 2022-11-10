@@ -83,6 +83,7 @@ def workflow_iterate(systems_train=None, systems_test=None,n_iter = 0,
         
         scf_op = ScfAbacus(
             "prep-run-scf-abacus",
+            False,
             ConvertScfAbacus,
             PrepScfAbacus,
             RunScfAbacus,

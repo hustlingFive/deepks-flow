@@ -8,7 +8,7 @@ import os, shutil
 from typing import List
 from pathlib import Path
 from deepks2.utils.file_utils import load_yaml
-from deepks2.utils.path_utils import link_file
+from deepks2.utils.path_utils import copy_dir
 from deepks2.constants import DATA_TRAIN, DATA_TEST, SYS_TRAIN, SYS_TEST, SCF_STEP_DIR
 
 class GatherStatsScfAbacus(OP):
@@ -72,7 +72,15 @@ class GatherStatsScfAbacus(OP):
         )
         
         gather_stats_abacus(**gather_scf_config)
-        
+
+        # copy atom.npy
+        sys_train_paths = [s for s in os.listdir(SYS_TRAIN)] if os.path.exists(SYS_TRAIN) else []
+        sys_test_paths = [s for s in os.listdir(SYS_TEST)] if os.path.exists(SYS_TEST) else []
+        for path in sys_train_paths:
+            shutil.copy2(f"{SYS_TRAIN}/{path}/atom.npy",f"{train_dump}/{path}/atom.npy")
+        for path in sys_test_paths:
+            shutil.copy2(f"{SYS_TEST}/{path}/atom.npy",f"{test_dump}/{path}/atom.npy")
+
         os.chdir(cwd)
         return OPIO({
             '00_scf' : system/SCF_STEP_DIR,
@@ -114,11 +122,12 @@ class GatherMixScfAbacus(OP):
         os.mkdir(SCF_STEP_DIR)
         scf_dir = Path(SCF_STEP_DIR)
 
-        for path in mixscf:
-            for data in [DATA_TRAIN,DATA_TEST]:
-                os.mkdir(scf_dir/data)
+        for data in [DATA_TRAIN,DATA_TEST]:
+            os.mkdir(scf_dir/data)
+            for path in mixscf:
                 for group in os.listdir(path/data):
-                    link_file(path/data/group, scf_dir/data/group)
+                    copy_dir(path/data/group, scf_dir/data/group)
+
         return OPIO({
             '00_scf' : scf_dir,
         })

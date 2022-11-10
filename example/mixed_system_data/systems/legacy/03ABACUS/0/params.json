@@ -1,0 +1,12 @@
+{
+    "job_name": "BN1-train",
+    "command": "bash -c \"source /opt/intel/oneapi/setvars.sh && mpirun -n 16 /root/abacus-develop/bin/ABACUS.mpi > log\"",
+    "log_file": "log",
+    "backward_files": ["grad_vx.npy","dm_eig.npy","e_base.npy","e_tot.npy","f_base.npy","f_tot.npy","o_base.npy","log","./OUT.ABACUS/running_scf.log"],
+    "program_id": 717,
+    "platform": "ali",
+    "job_group_id": "144240",
+    "disk_size": 50,
+    "machine_type": "c16_m32_cpu",
+    "image_name": "deepks-20220401"
+}

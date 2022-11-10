@@ -26,7 +26,7 @@ class ConvertScfAbacus(OP):
     @classmethod
     def get_output_sign(cls):
         return OPIOSign({
-            "system": Artifact(Path),
+            "tasks": Artifact(Path),
             "model": Artifact(Path),
         })
 
@@ -83,7 +83,7 @@ class ConvertScfAbacus(OP):
         os.chdir(cwd)
 
         return OPIO({
-            "system": system,
+            "tasks": system,
             "model": system/CMODEL_FILE,
         })
 
@@ -126,44 +126,46 @@ class ConvertScfAbacus(OP):
                 cell_data = np.load(f"{sys_paths[i]}/box.npy")
             nframes = atom_data.shape[0]
             natoms = atom_data.shape[1]
-            atoms = atom_data[1, :, 0]
-            # atoms.sort() # type order
-            types = np.unique(atoms)  # index in type list
+            atoms = atom_data[1,:,0]
+            #atoms.sort() # type order
+            types = np.unique(atoms) #index in type list
             ntype = types.size
             from collections import Counter
-            nta = Counter(atoms)  # dict {itype: nta}, natom in each type
+            nta = Counter(atoms) #dict {itype: nta}, natom in each type
             if not os.path.exists(f"{sys_paths[i]}/ABACUS"):
                 os.mkdir(f"{sys_paths[i]}/ABACUS")
-            # pre_args.update({"lattice_vector":lattice_vector})
-            # if "stru_abacus.yaml" exists, update STRU args in pre_args:
-            pre_args_new = dict(zip(pre_args.keys(), pre_args.values()))
+            #pre_args.update({"lattice_vector":lattice_vector})
+            #if "stru_abacus.yaml" exists, update STRU args in pre_args:
+            pre_args_new=dict(zip(pre_args.keys(),pre_args.values()))
             if os.path.exists(f"{sys_paths[i]}/stru_abacus.yaml"):
                 from deepks.utils import load_yaml
                 stru_abacus = load_yaml(f"{sys_paths[i]}/stru_abacus.yaml")
-                for k, v in stru_abacus.items():
-                    pre_args_new[k] = v
+                for k,v in stru_abacus.items():
+                    pre_args_new[k]=v
             for f in range(nframes):
                 if not os.path.exists(f"{sys_paths[i]}/ABACUS/{f}"):
                     os.mkdir(f"{sys_paths[i]}/ABACUS/{f}")
-                # create STRU file
+                ###create STRU file
                 if not os.path.isfile(f"{sys_paths[i]}/ABACUS/{f}/STRU"):
                     Path(f"{sys_paths[i]}/ABACUS/{f}/STRU").touch()
-                # create sys_data for each frame
-                frame_data = atom_data[f]
-                # frame_sorted=frame_data[np.lexsort(frame_data[:,::-1].T)] #sort cord by type
-                sys_data = {'atom_names': [TYPE_NAME[it] for it in nta.keys()], 'atom_numbs': list(nta.values()),
-                            # 'cells': np.array([lattice_vector]), 'coords': [frame_sorted[:,1:]]}
-                            'cells': np.array([lattice_vector]), 'coords': [frame_data[:, 1:]]}
+                #create sys_data for each frame
+                frame_data=atom_data[f]
+                #frame_sorted=frame_data[np.lexsort(frame_data[:,::-1].T)] #sort cord by type
+                sys_data={'atom_names':[TYPE_NAME[it] for it in nta.keys()], 'atom_numbs': list(nta.values()), 
+                            #'cells': np.array([lattice_vector]), 'coords': [frame_sorted[:,1:]]}
+                            'cells': np.array([lattice_vector]), 'coords': [frame_data[:,1:]]}
                 if os.path.isfile(f"{sys_paths[i]}/box.npy"):
-                    sys_data = {'atom_names': [TYPE_NAME[it] for it in nta.keys()], 'atom_numbs': list(nta.values()),
-                                'cells': [cell_data[f]], 'coords': [frame_data[:, 1:]]}
-                # write STRU file
+                    sys_data={'atom_names':[TYPE_NAME[it] for it in nta.keys()], 'atom_numbs': list(nta.values()),
+                            'cells': [cell_data[f]], 'coords': [frame_data[:,1:]]}
+                #write STRU file
                 with open(f"{sys_paths[i]}/ABACUS/{f}/STRU", "w") as stru_file:
-                    stru_file.write(make_abacus_scf_stru(
-                        sys_data, pp_files, pre_args_new))
-                # write INPUT file
+                    stru_file.write(make_abacus_scf_stru(sys_data, pp_files, pre_args_new))
+                #write INPUT file
                 with open(f"{sys_paths[i]}/ABACUS/{f}/INPUT", "w") as input_file:
                     input_file.write(make_abacus_scf_input(pre_args))
-                # write KPT file (gamma_only)
-                with open(f"{sys_paths[i]}/ABACUS/{f}/KPT", "w") as kpt_file:
-                    kpt_file.write(make_abacus_scf_kpt(pre_args))
+
+
+                #write KPT file if k_points is explicitly specified or for gamma_only case
+                if pre_args["k_points"] is not None or pre_args["gamma_only"] is True:
+                    with open(f"{sys_paths[i]}/ABACUS/{f}/KPT","w") as kpt_file:
+                        kpt_file.write(make_abacus_scf_kpt(pre_args))

@@ -7,3 +7,4 @@ __all__ = [
 from .scf_abacus import ScfAbacus
 from .deepks_train import PrepRunTrain
 from .deepks_abacus_iter import DeepksAbacusIter
+from .deepks_abacus_mixiter import DeepksAbacusMixIter

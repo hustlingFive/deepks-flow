@@ -1,0 +1,464 @@
+ *********************************************************
+ *                                                       *
+ *                  WELCOME TO ABACUS                    *
+ *                                                       *
+ *            'Atomic-orbital Based Ab-initio            *
+ *                  Computation at UStc'                 *
+ *                                                       *
+ *          Website: http://abacus.ustc.edu.cn/          *
+ *                                                       *
+ *********************************************************
+ Fri Apr  1 20:11:07 2022
+ MAKE THE DIR         : OUT.ABACUS/
+ dft_functional readin is: pbe
+ dft_functional in pseudopot file is: PBE
+In Pseudopot_upf::read_pseudo_header : input xc functional does not match that in pseudopot file
+Please make sure this is what you need
+ dft_functional readin is: pbe
+ dft_functional in pseudopot file is: PBE
+In Pseudopot_upf::read_pseudo_header : input xc functional does not match that in pseudopot file
+Please make sure this is what you need
+ DONE(0.261693   SEC) : SETUP UNITCELL
+ DONE(0.271264   SEC) : INIT K-POINTS
+ ---------------------------------------------------------
+ Self-consistent calculations for electrons
+ ---------------------------------------------------------
+ SPIN    KPOINTS         PROCESSORS  NBASE       
+ 1       125             16          52          
+ ---------------------------------------------------------
+ Use Systematically Improvable Atomic bases
+ ---------------------------------------------------------
+ ELEMENT ORBITALS        NBASE       NATOM       XC          
+ B       2s2p1d-8au      13          2           PBE
+ N       2s2p1d-8au      13          2           PBE
+ ---------------------------------------------------------
+ Initial plane wave basis and FFT box
+ ---------------------------------------------------------
+ SET NONLOCAL PSEUDOPOTENTIAL PROJECTORS
+ SET NONLOCAL PSEUDOPOTENTIAL PROJECTORS
+ DONE(12.1969    SEC) : INIT PLANEWAVE
+ UNIFORM GRID DIM     : 24 * 24 * 72
+ UNIFORM GRID DIM(BIG): 12 * 12 * 36
+ DONE(12.1976    SEC) : INIT CHARGE
+ DONE(12.1977    SEC) : INIT POTENTIAL
+ START POTENTIAL      : atomic
+ -------------------------------------------
+ SELF-CONSISTENT : 
+ -------------------------------------------
+ ITER   ETOT(eV)       EDIFF(eV)      DRHO2      TIME(s)    
+ HOMO index is 73
+ HOMO energy -0.0442874
+ LUMO index is 7
+ LUMO energy 0.449478
+ GE1    -7.003818e+02  0.000000e+00   2.536e-01  4.111e+00  
+ HOMO index is 73
+ HOMO energy 2.534e-02
+ LUMO index is 7
+ LUMO energy 4.513e-01
+ GE2    -7.007482e+02  -3.663797e-01  1.712e-01  8.543e+00  
+ HOMO index is 48
+ HOMO energy 1.273e-01
+ LUMO index is 23
+ LUMO energy 4.658e-01
+ GE3    -7.009271e+02  -1.789139e-01  7.581e-02  8.572e+00  
+ HOMO index is 7
+ HOMO energy 1.763e-01
+ LUMO index is 7
+ LUMO energy 5.079e-01
+ GE4    -7.006924e+02  2.346943e-01   2.557e-02  8.417e+00  
+ HOMO index is 23
+ HOMO energy 1.718e-01
+ LUMO index is 7
+ LUMO energy 5.121e-01
+ GE5    -7.005251e+02  1.672788e-01   1.318e-02  8.417e+00  
+ HOMO index is 7
+ HOMO energy 1.708e-01
+ LUMO index is 7
+ LUMO energy 5.098e-01
+ GE6    -7.005504e+02  -2.526212e-02  9.980e-03  8.381e+00  
+ HOMO index is 7
+ HOMO energy 1.762e-01
+ LUMO index is 7
+ LUMO energy 5.100e-01
+ GE7    -7.005805e+02  -3.015526e-02  3.064e-03  8.366e+00  
+ HOMO index is 23
+ HOMO energy 1.762e-01
+ LUMO index is 7
+ LUMO energy 5.087e-01
+ GE8    -7.005662e+02  1.433985e-02   1.765e-03  8.388e+00  
+ HOMO index is 7
+ HOMO energy 1.762e-01
+ LUMO index is 7
+ LUMO energy 5.075e-01
+ GE9    -7.005678e+02  -1.604747e-03  6.656e-04  8.402e+00  
+ HOMO index is 107
+ HOMO energy 1.760e-01
+ LUMO index is 23
+ LUMO energy 5.065e-01
+ GE10   -7.005689e+02  -1.075103e-03  6.035e-04  8.432e+00  
+ HOMO index is 48
+ HOMO energy 1.759e-01
+ LUMO index is 23
+ LUMO energy 5.061e-01
+ GE11   -7.005705e+02  -1.619735e-03  6.449e-04  8.488e+00  
+ HOMO index is 48
+ HOMO energy 1.758e-01
+ LUMO index is 7
+ LUMO energy 5.060e-01
+ GE12   -7.005715e+02  -9.532959e-04  9.019e-04  8.446e+00  
+ HOMO index is 48
+ HOMO energy 1.755e-01
+ LUMO index is 7
+ LUMO energy 5.052e-01
+ GE13   -7.005712e+02  2.217601e-04   4.736e-04  8.482e+00  
+ HOMO index is 48
+ HOMO energy 1.754e-01
+ LUMO index is 7
+ LUMO energy 5.050e-01
+ GE14   -7.005726e+02  -1.346666e-03  5.406e-04  8.477e+00  
+ HOMO index is 107
+ HOMO energy 1.754e-01
+ LUMO index is 23
+ LUMO energy 5.048e-01
+ GE15   -7.005733e+02  -6.863344e-04  4.551e-04  8.451e+00  
+ HOMO index is 107
+ HOMO energy 1.753e-01
+ LUMO index is 7
+ LUMO energy 5.050e-01
+ GE16   -7.005737e+02  -4.279670e-04  6.947e-04  8.473e+00  
+ HOMO index is 107
+ HOMO energy 1.753e-01
+ LUMO index is 7
+ LUMO energy 5.044e-01
+ GE17   -7.005737e+02  4.020905e-05   3.662e-04  8.468e+00  
+ HOMO index is 48
+ HOMO energy 1.753e-01
+ LUMO index is 7
+ LUMO energy 5.043e-01
+ GE18   -7.005739e+02  -2.524841e-04  4.122e-04  8.451e+00  
+ HOMO index is 107
+ HOMO energy 1.753e-01
+ LUMO index is 23
+ LUMO energy 5.044e-01
+ GE19   -7.005745e+02  -5.667237e-04  4.589e-04  8.432e+00  
+ HOMO index is 48
+ HOMO energy 1.752e-01
+ LUMO index is 7
+ LUMO energy 5.042e-01
+ GE20   -7.005742e+02  2.509264e-04   3.706e-04  8.484e+00  
+ HOMO index is 107
+ HOMO energy 1.752e-01
+ LUMO index is 7
+ LUMO energy 5.041e-01
+ GE21   -7.005745e+02  -2.981849e-04  3.299e-04  8.500e+00  
+ HOMO index is 107
+ HOMO energy 1.752e-01
+ LUMO index is 7
+ LUMO energy 5.041e-01
+ GE22   -7.005747e+02  -1.294177e-04  3.808e-04  9.065e+00  
+ HOMO index is 107
+ HOMO energy 1.752e-01
+ LUMO index is 7
+ LUMO energy 5.039e-01
+ GE23   -7.005746e+02  3.613705e-05   2.770e-04  8.570e+00  
+ HOMO index is 82
+ HOMO energy 1.752e-01
+ LUMO index is 7
+ LUMO energy 5.037e-01
+ GE24   -7.005747e+02  -3.510766e-05  1.900e-04  8.425e+00  
+ HOMO index is 48
+ HOMO energy 1.751e-01
+ LUMO index is 7
+ LUMO energy 5.038e-01
+ GE25   -7.005749e+02  -2.178507e-04  2.451e-04  8.467e+00  
+ HOMO index is 73
+ HOMO energy 1.751e-01
+ LUMO index is 23
+ LUMO energy 5.036e-01
+ GE26   -7.005748e+02  8.222036e-05   1.772e-04  8.410e+00  
+ HOMO index is 107
+ HOMO energy 1.751e-01
+ LUMO index is 7
+ LUMO energy 5.037e-01
+ GE27   -7.005749e+02  -1.233345e-04  2.060e-04  8.434e+00  
+ HOMO index is 73
+ HOMO energy 1.751e-01
+ LUMO index is 7
+ LUMO energy 5.036e-01
+ GE28   -7.005749e+02  6.891874e-06   1.766e-04  8.401e+00  
+ HOMO index is 73
+ HOMO energy 1.751e-01
+ LUMO index is 23
+ LUMO energy 5.036e-01
+ GE29   -7.005749e+02  -1.958265e-05  1.815e-04  8.456e+00  
+ HOMO index is 73
+ HOMO energy 1.751e-01
+ LUMO index is 7
+ LUMO energy 5.036e-01
+ GE30   -7.005751e+02  -1.779655e-04  2.398e-04  8.443e+00  
+ HOMO index is 73
+ HOMO energy 1.750e-01
+ LUMO index is 23
+ LUMO energy 5.035e-01
+ GE31   -7.005748e+02  2.806540e-04   1.706e-04  8.370e+00  
+ HOMO index is 48
+ HOMO energy 1.748e-01
+ LUMO index is 7
+ LUMO energy 5.034e-01
+ GE32   -7.005747e+02  1.366620e-04   1.254e-04  8.376e+00  
+ HOMO index is 48
+ HOMO energy 1.748e-01
+ LUMO index is 7
+ LUMO energy 5.035e-01
+ GE33   -7.005751e+02  -3.965102e-04  8.062e-05  8.381e+00  
+ HOMO index is 107
+ HOMO energy 1.747e-01
+ LUMO index is 23
+ LUMO energy 5.037e-01
+ GE34   -7.005751e+02  1.656685e-05   6.653e-05  8.407e+00  
+ HOMO index is 48
+ HOMO energy 1.747e-01
+ LUMO index is 7
+ LUMO energy 5.037e-01
+ GE35   -7.005750e+02  8.022647e-05   5.861e-05  8.413e+00  
+ HOMO index is 107
+ HOMO energy 1.746e-01
+ LUMO index is 23
+ LUMO energy 5.039e-01
+ GE36   -7.005750e+02  -5.146924e-05  3.804e-05  8.365e+00  
+ HOMO index is 107
+ HOMO energy 1.745e-01
+ LUMO index is 7
+ LUMO energy 5.039e-01
+ GE37   -7.005750e+02  1.608074e-05   2.376e-05  8.397e+00  
+ HOMO index is 48
+ HOMO energy 1.745e-01
+ LUMO index is 7
+ LUMO energy 5.040e-01
+ GE38   -7.005751e+02  -2.742136e-05  1.368e-05  8.395e+00  
+ HOMO index is 48
+ HOMO energy 1.744e-01
+ LUMO index is 7
+ LUMO energy 5.041e-01
+ GE39   -7.005750e+02  3.130321e-06   3.918e-06  8.366e+00  
+ HOMO index is 107
+ HOMO energy 1.744e-01
+ LUMO index is 7
+ LUMO energy 5.041e-01
+ GE40   -7.005751e+02  -7.348406e-06  4.784e-06  8.367e+00  
+ HOMO index is 48
+ HOMO energy 1.744e-01
+ LUMO index is 23
+ LUMO energy 5.041e-01
+ GE41   -7.005751e+02  -3.421022e-06  8.033e-06  8.375e+00  
+ HOMO index is 48
+ HOMO energy 1.744e-01
+ LUMO index is 7
+ LUMO energy 5.041e-01
+ GE42   -7.005751e+02  -9.152394e-06  1.037e-05  8.380e+00  
+ HOMO index is 107
+ HOMO energy 1.744e-01
+ LUMO index is 7
+ LUMO energy 5.041e-01
+ GE43   -7.005751e+02  -8.624714e-07  1.268e-05  8.376e+00  
+ HOMO index is 48
+ HOMO energy 1.744e-01
+ LUMO index is 7
+ LUMO energy 5.041e-01
+ GE44   -7.005751e+02  -8.117399e-07  1.615e-05  8.353e+00  
+ HOMO index is 107
+ HOMO energy 1.744e-01
+ LUMO index is 23
+ LUMO energy 5.041e-01
+ GE45   -7.005751e+02  -3.394035e-07  1.989e-05  8.382e+00  
+ HOMO index is 107
+ HOMO energy 1.744e-01
+ LUMO index is 7
+ LUMO energy 5.041e-01
+ GE46   -7.005751e+02  -3.209075e-06  2.217e-05  8.360e+00  
+ HOMO index is 107
+ HOMO energy 1.744e-01
+ LUMO index is 7
+ LUMO energy 5.041e-01
+ GE47   -7.005751e+02  4.932690e-06   2.681e-05  8.350e+00  
+ HOMO index is 48
+ HOMO energy 1.744e-01
+ LUMO index is 7
+ LUMO energy 5.041e-01
+ GE48   -7.005751e+02  -7.956262e-06  2.642e-05  8.350e+00  
+ HOMO index is 107
+ HOMO energy 1.744e-01
+ LUMO index is 7
+ LUMO energy 5.041e-01
+ GE49   -7.005751e+02  5.655009e-07   2.713e-05  8.444e+00  
+ HOMO index is 107
+ HOMO energy 1.744e-01
+ LUMO index is 7
+ LUMO energy 5.041e-01
+ GE50   -7.005751e+02  5.104167e-06   3.139e-05  8.423e+00  
+ HOMO index is 107
+ HOMO energy 1.744e-01
+ LUMO index is 7
+ LUMO energy 5.041e-01
+ GE51   -7.005751e+02  -2.934301e-06  3.287e-05  8.423e+00  
+ HOMO index is 107
+ HOMO energy 1.744e-01
+ LUMO index is 23
+ LUMO energy 5.041e-01
+ GE52   -7.005751e+02  -3.920212e-06  3.322e-05  8.357e+00  
+ HOMO index is 48
+ HOMO energy 1.745e-01
+ LUMO index is 23
+ LUMO energy 5.041e-01
+ GE53   -7.005751e+02  2.611409e-06   3.379e-05  8.375e+00  
+ HOMO index is 107
+ HOMO energy 1.745e-01
+ LUMO index is 7
+ LUMO energy 5.041e-01
+ GE54   -7.005751e+02  6.474079e-07   3.343e-05  8.381e+00  
+ HOMO index is 48
+ HOMO energy 1.745e-01
+ LUMO index is 23
+ LUMO energy 5.041e-01
+ GE55   -7.005751e+02  -9.293940e-07  3.324e-05  8.374e+00  
+ HOMO index is 48
+ HOMO energy 1.745e-01
+ LUMO index is 23
+ LUMO energy 5.041e-01
+ GE56   -7.005751e+02  5.754750e-06   3.677e-05  8.390e+00  
+ HOMO index is 48
+ HOMO energy 1.745e-01
+ LUMO index is 7
+ LUMO energy 5.041e-01
+ GE57   -7.005751e+02  -5.663379e-06  3.531e-05  8.375e+00  
+ HOMO index is 107
+ HOMO energy 1.745e-01
+ LUMO index is 23
+ LUMO energy 5.041e-01
+ GE58   -7.005751e+02  3.301252e-07   3.471e-05  8.385e+00  
+ HOMO index is 48
+ HOMO energy 1.745e-01
+ LUMO index is 7
+ LUMO energy 5.040e-01
+ GE59   -7.005751e+02  -3.743924e-06  3.324e-05  8.451e+00  
+ HOMO index is 107
+ HOMO energy 1.745e-01
+ LUMO index is 23
+ LUMO energy 5.041e-01
+ GE60   -7.005751e+02  1.458122e-05   3.105e-05  8.424e+00  
+ HOMO index is 107
+ HOMO energy 1.745e-01
+ LUMO index is 23
+ LUMO energy 5.041e-01
+ GE61   -7.005751e+02  -5.668407e-05  1.109e-05  8.356e+00  
+ HOMO index is 48
+ HOMO energy 1.745e-01
+ LUMO index is 23
+ LUMO energy 5.040e-01
+ GE62   -7.005751e+02  5.643940e-05   8.110e-06  8.444e+00  
+ HOMO index is 48
+ HOMO energy 1.746e-01
+ LUMO index is 7
+ LUMO energy 5.040e-01
+ GE63   -7.005751e+02  -2.334291e-05  8.352e-06  8.426e+00  
+ HOMO index is 107
+ HOMO energy 1.745e-01
+ LUMO index is 23
+ LUMO energy 5.040e-01
+ GE64   -7.005751e+02  3.471006e-05   2.548e-06  8.405e+00  
+ HOMO index is 48
+ HOMO energy 1.745e-01
+ LUMO index is 23
+ LUMO energy 5.040e-01
+ GE65   -7.005751e+02  -1.110738e-05  2.141e-06  8.445e+00  
+ HOMO index is 48
+ HOMO energy 1.745e-01
+ LUMO index is 23
+ LUMO energy 5.040e-01
+ GE66   -7.005751e+02  9.739963e-06   3.311e-06  8.422e+00  
+ HOMO index is 107
+ HOMO energy 1.745e-01
+ LUMO index is 7
+ LUMO energy 5.040e-01
+ GE67   -7.005751e+02  -1.288070e-05  1.560e-06  8.428e+00  
+ HOMO index is 107
+ HOMO energy 1.745e-01
+ LUMO index is 23
+ LUMO energy 5.040e-01
+ GE68   -7.005751e+02  2.344511e-06   9.142e-07  8.473e+00  
+ HOMO index is 48
+ HOMO energy 1.745e-01
+ LUMO index is 7
+ LUMO energy 5.040e-01
+ GE69   -7.005751e+02  2.248315e-06   1.238e-06  8.481e+00  
+ HOMO index is 107
+ HOMO energy 1.745e-01
+ LUMO index is 23
+ LUMO energy 5.040e-01
+ GE70   -7.005751e+02  -2.396202e-06  4.985e-07  8.413e+00  
+E_delta_band = -2.55466041e-01 Ry = -3.47579380e+00 eV
+E_delta_NN= -1.08664039e-01 Ry = -1.47845009e+00 eV
+
+  |CLASS_NAME---------|NAME---------------|TIME(Sec)-----|CALLS----|AVG------|PER%-------
+                       total               641.59         11        58        1e+02     %
+   Driver              reading             0.12257        1         0.12      0.019     %
+   Run_lcao            lcao_line           641.47         1         6.4e+02   1e+02     %
+   ORB_control         read_orb_first      0.7848         1         0.78      0.12      %
+   LCAO_Orbitals       Read_Orbitals       0.7848         1         0.78      0.12      %
+   NOrbital_Lm         extra_uniform       0.47456        55        0.0086    0.074     %
+   Mathzone_Add1       Uni_Deriv_Phi       0.44148        55        0.008     0.069     %
+   ORB_control         set_orb_tables      6.6585         1         6.7       1         %
+   ORB_gen_tables      gen_tables          6.6585         1         6.7       1         %
+   ORB_table_phi       init_Table          1.275          1         1.3       0.2       %
+   ORB_table_phi       cal_ST_Phi12_R      1.2603         210       0.006     0.2       %
+   ORB_table_beta      init_Table_Beta     0.53377        1         0.53      0.083     %
+   ORB_table_beta      VNL_PhiBeta_R       0.52954        104       0.0051    0.083     %
+   ORB_table_alpha     init_Table_Alpha    4.6607         1         4.7       0.73      %
+   ORB_table_alpha     S_PhiAlpha_R        4.6308         660       0.007     0.72      %
+   FFT                 FFT3D               0.15016        1087      0.00014   0.023     %
+   Potential           v_of_rho            0.19914        72        0.0028    0.031     %
+   H_XC_pw             v_xc                0.18343        73        0.0025    0.029     %
+   LOOP_ions           opt_ions            629.31         1         6.3e+02   98        %
+   LOOP_elec           solve_elec_stru     586.22         1         5.9e+02   91        %
+   Grid_Driver         Find_atom           1.2265         71240     1.7e-05   0.19      %
+   LOOP_elec           before_solver       0.20813        1         0.21      0.032     %
+   LCAO_gen_fixedH     build_Nonlocal_mu_new0.17505        2         0.088     0.027     %
+   LCAO_Deepks         build_psialpha      0.13218        1         0.13      0.021     %
+   ORB_gen_tables      snap_psialpha_half  0.12277        1742      7e-05     0.019     %
+   LOOP_elec           solver              585.97         1         5.9e+02   91        %
+   ELEC_scf            scf                 585.97         1         5.9e+02   91        %
+   H_Ewald_pw          compute_ewald       0.13705        1         0.14      0.021     %
+   ELEC_cbands_k       cal_bands           545.49         70        7.8       85        %
+   LCAO_Deepks         cal_projected_DM_k  260.85         72        3.6       41        %
+   LCAO_DESCRIPTOR     add_v_delta_k       114.85         70        1.6       18        %
+   Gint_k              vlocal              27.777         70        0.4       4.3       %
+   Efficience          each_k              71.146         8750      0.0081    11        %
+   Efficience          H_k                 31.523         8750      0.0036    4.9       %
+   LCAO_Hamilt         calculate_Hk        31.505         8750      0.0036    4.9       %
+   Gint_k              folding_vl_k        7.8244         8750      0.00089   1.2       %
+   Gint_k              Distri              3.2099         8750      0.00037   0.5       %
+   LCAO_nnr            folding_fixedH      23.641         8750      0.0027    3.7       %
+   Efficience          diago_k             39.614         8750      0.0045    6.2       %
+   Diago_LCAO_Matrix   elpa_solve          37.615         8750      0.0043    5.9       %
+   Diago_LCAO_Matrix   gath_eig_complex    1.0347         8750      0.00012   0.16      %
+   Local_Orbital_Cha   sum_bands           39.867         70        0.57      6.2       %
+   LCAO_Charge         cal_dk_k            19.028         70        0.27      3         %
+   Gint_k              cal_rho_k           18.939         70        0.27      3         %
+   LOOP_ions           force_stress        38.299         1         38        6         %
+   Force_Stress_LCAO   getForceStress      38.299         1         38        6         %
+   Force_LCAO_k        ftable_k            14.072         1         14        2.2       %
+   Force_LCAO_k        allocate_k          0.18132        1         0.18      0.028     %
+   Force_LCAO_k        cal_foverlap_k      0.25621        1         0.26      0.04      %
+   Force_LCAO_k        set_EDM_k           0.50008        2         0.25      0.078     %
+   Force_LCAO_k        cal_fvl_dphi_k      2.8414         1         2.8       0.44      %
+   Gint_k              svl_k_RealSpace     2.8238         1         2.8       0.44      %
+   Gint_k              evaluate_vl_force   2.6862         432       0.0062    0.42      %
+   Force_LCAO_k        cal_fvnl_dbeta_k_new0.30038        1         0.3       0.047     %
+   LCAO_Deepks         cal_f_delta_hf_k_new5.318          1         5.3       0.83      %
+   LCAO_Deepks         cal_gdmx_k          24.143         1         24        3.8       %
+ ----------------------------------------------------------------------------------------
+
+ START  Time  : Fri Apr  1 20:11:07 2022
+ FINISH Time  : Fri Apr  1 20:21:48 2022
+ TOTAL  Time  : 6.4e+02
+ SEE INFORMATION IN : OUT.ABACUS/

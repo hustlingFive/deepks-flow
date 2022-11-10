@@ -1,0 +1,105 @@
+ AUTO_SET ks_solver to genelpa
+ Input  warning : gamma_only_local algorithm is not used.
+ AUTO_SET lcao_ecut to 60
+ In SCAN_BEGIN, can't find: LATTICE_PARAMETERS block.
+ In SCAN_BEGIN, can't find: <PP_SPIN_ORB> block.
+ In SCAN_END, can't find: </PP_SPIN_ORB> block.
+ In SCAN_END, can't find: </UPF> block.
+ dft_functional readin is: pbe
+ dft_functional in pseudopot file is: PBE
+ In SCAN_BEGIN, can't find: <PP_SPIN_ORB> block.
+ In SCAN_END, can't find: </PP_SPIN_ORB> block.
+ In SCAN_END, can't find: </UPF> block.
+ dft_functional readin is: pbe
+ dft_functional in pseudopot file is: PBE
+ AUTO_SET NBANDS to 0
+ AUTO_SET NBANDS to 54
+ functional  warning : file ./src_pw/xc_type.cpp line 297 may error 
+ functional  warning : file ./src_pw/xc_type.cpp line 297 may error 
+                            startmag_type = 1
+                       charge from rho_at = 18.9775
+                         charge should be = 19
+                       charge from rho_at = 5.98967
+                         charge should be = 6
+
+ SETUP ATOMIC RHO FOR SPIN 1
+                 Electron number from rho = 88
+           total electron number from rho = 88
+                                should be = 88
+                 charge before normalized = 88.0000000000001
+                  charge after normalized = 88
+      Processor           Atom
+              1             27
+              2             27
+              3             25
+              4             25
+              5             27
+              6             26
+              7             28
+              8             27
+              9             26
+             10             25
+             11             25
+             12             26
+             13             27
+             14             28
+             15             28
+             16             27
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 88.0004052005425
+                  charge after normalized = 88
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 88.0004116356901
+                  charge after normalized = 88
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 88.0004147591292
+                  charge after normalized = 88
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 88.0004149211282
+                  charge after normalized = 88
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 88.0004150429709
+                  charge after normalized = 88
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 88.0004149899172
+                  charge after normalized = 88
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 88.0004149392944
+                  charge after normalized = 88
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 88.0004149406668
+                  charge after normalized = 88
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 88.0004149413502
+                  charge after normalized = 88
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 88.0004149425674
+                  charge after normalized = 88
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 88.0004149412835
+                  charge after normalized = 88
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 88.0004149415811
+                  charge after normalized = 88
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 88.0004149417072
+                  charge after normalized = 88
+
+ CHECK UPDATE INPUT INFORMATION
+                 charge before normalized = 88.0004149418496
+                  charge after normalized = 88
+                 charge before normalized = 88
+                  charge after normalized = 88

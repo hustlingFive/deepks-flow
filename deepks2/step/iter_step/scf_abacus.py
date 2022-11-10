@@ -37,6 +37,7 @@ class ScfAbacus(Steps):
     def __init__(
             self,
             name: str,
+            for_mix_scf: bool,
             convert_scf_op: OP,
             prep_scf_abacus_op: OP,
             run_scf_abacus_op: OP,
@@ -82,7 +83,7 @@ class ScfAbacus(Steps):
             )
         ii = 'run-scf-abacus'
         self.step_keys[ii] = '--'.join(
-            ["%s" % self.inputs.parameters["block_id"], ii + "-{{item}}"]
+            ["%s" % self.inputs.parameters["block_id"], ii + ("-{{inputs.parameters.dflow_item}}-{{item}}" if for_mix_scf else "-{{item}}")]
         )
 
         self = _scf_abacus(
@@ -146,7 +147,7 @@ def _scf_abacus(
         template=PythonOPTemplate(
             convert_scf_op,
             output_artifact_archive={
-                "system": None,
+                "tasks": None,
             },
             python_packages=upload_python_package,
             **assistant_template_config,
@@ -179,7 +180,7 @@ def _scf_abacus(
         },
         artifacts={
             "config_file": scf_abacus_steps.inputs.artifacts["config_file"],
-            "system": convert_scf.outputs.artifacts["system"],
+            "tasks": convert_scf.outputs.artifacts["tasks"],
         },
         key=step_keys["prep-scf-abacus"],
         executor=assistant_executor,
