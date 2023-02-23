@@ -1,33 +1,14 @@
 import glob, os, pickle, sys, shutil
 from pathlib import Path
 from dflow import (
-    InputParameter,
-    OutputParameter,
-    Inputs,
-    InputArtifact,
-    Outputs,
-    OutputArtifact,
     Workflow,
     Step,
-    Steps,
     upload_artifact,
-    download_artifact,
-    S3Artifact,
-    argo_range,
-)
-from dflow.python import (
-    PythonOPTemplate,
-    OP,
-    OPIO,
-    OPIOSign,
-    Artifact,
-    upload_packages,
-    FatalError,
-    TransientError,
 )
 
 from deepks2.utils.step_config import normalize as normalize_step_dict
 from deepks2.utils.collect_inputs import collect_inputs, check_arg_dict
+from deepks2.utils.bohrium_config import bohrium_config_from_dict
 
 
 from deepks2.op.iter_op.convert_scf_op import ConvertScfAbacus
@@ -79,7 +60,7 @@ def workflow_iterate(systems_train=None, systems_test=None,n_iter = 0,
                                             train_only=train_only,no_test=no_test,
                                             train_conf = train_input, init_train_conf = init_train,
                                             scf_conf = scf_abacus, init_scf_conf = init_scf_abacus,
-                                            default_train_args = DEFAULT_TRAIN_ARGS, default_scf_args_abacus = DEFAULT_SCF_ARGS_ABACUS)
+                                            default_train_args = DEFAULT_TRAIN_ARGS, default_scf_args = DEFAULT_SCF_ARGS_ABACUS)
         
         scf_op = ScfAbacus(
             "prep-run-scf-abacus",
@@ -138,23 +119,27 @@ def workflow_iterate(systems_train=None, systems_test=None,n_iter = 0,
 
 def submit_iterate(*args, **kwargs):
     # set global config
-    from dflow import config, s3_config
-    dflow_config = kwargs.get('dflow_config', None)
-    if dflow_config is not None :
-        config["host"] = dflow_config.get('host', None)
-        s3_config["endpoint"] = dflow_config.get('s3_endpoint', None)
-        config["k8s_api_server"] = dflow_config.get('k8s_api_server', None)
-        config["token"] = dflow_config.get('token', None)    
+    # from dflow import config, s3_config
+    # dflow_config = kwargs.get('dflow_config', None)
+    # if dflow_config is not None :
+    #     config["host"] = dflow_config.get('host', None)
+    #     s3_config["endpoint"] = dflow_config.get('s3_endpoint', None)
+    #     config["k8s_api_server"] = dflow_config.get('k8s_api_server', None)
+    #     config["token"] = dflow_config.get('token', None)  
 
-    # lebesgue context
-    from dflow.plugins.lebesgue import LebesgueContext
-    lb_context_config = kwargs.get("lebesgue_context_config", None)
-    if lb_context_config:
-        lebesgue_context = LebesgueContext(
-            **lb_context_config,
+    bohrium_config = kwargs.get('bohrium_config', None)
+    if bohrium_config is not None:
+        bohrium_config_from_dict(bohrium_config)  
+
+    # bohrium context
+    from dflow.plugins.bohrium import BohriumContext
+    bh_context_config = kwargs.pop("bohrium_context_config", None)
+    if bh_context_config:
+        bohrium_context = BohriumContext(
+            **bh_context_config,
         )
-    else :
-        lebesgue_context = None
+    else:
+        bohrium_context = None
 
     # print('config:', config)
     # print('s3_config:',s3_config)
@@ -163,7 +148,7 @@ def submit_iterate(*args, **kwargs):
 
     deepks_iter = workflow_iterate(*args, **kwargs)
 
-    wf = Workflow(name="deepks-iter", context=lebesgue_context)
+    wf = Workflow(name="deepks-iter", context=bohrium_context)
     wf.add(deepks_iter)
 
     # reuse steps for resubmit

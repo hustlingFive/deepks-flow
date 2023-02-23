@@ -26,10 +26,7 @@ from dflow.python import(
 from deepks2.utils.arg_utils import deep_update
 from deepks2.utils.step_config import normalize as normalize_step_dict
 from deepks2.utils.step_config import init_executor
-from deepks2.constants import (BOHRIUM_SCF_ABACUS_CONVERT,
-                               BOHRIUM_SCF_ABACUS_PREP,
-                               BOHRIUM_SCF_ABACUS_RUN,
-                               BOHRIUM_SCF_ABACUS_GATHER)
+
 from copy import deepcopy
 
 
@@ -83,7 +80,7 @@ class ScfAbacus(Steps):
             )
         ii = 'run-scf-abacus'
         self.step_keys[ii] = '--'.join(
-            ["%s" % self.inputs.parameters["block_id"], ii + ("-{{inputs.parameters.dflow_item}}-{{item}}" if for_mix_scf else "-{{item}}")]
+            ["%s" % self.inputs.parameters["block_id"], ii + ("-{{inputs.parameters.dflow_key}}-{{item}}" if for_mix_scf else "-{{item}}")]
         )
 
         self = _scf_abacus(
@@ -138,8 +135,7 @@ def _scf_abacus(
     run_template_config = run_config.pop("template_config")
     assistant_executor = assistant_config.pop("executor")
     run_executor = run_config.pop("executor")
-    run_executor = init_executor(deep_update(
-        run_executor, BOHRIUM_SCF_ABACUS_RUN))
+    run_executor = init_executor(run_executor)
     assistant_executor = init_executor(assistant_executor)
 
     convert_scf = Step(

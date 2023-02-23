@@ -24,7 +24,7 @@ train_input:
   preprocess_args:
     preshift: false # restarting model already shifted. Will not recompute shift value
     prescale: false # same as above
-    prefit_ridge: 1e1
+    prefit_ridge: 10
     prefit_trainable: false
   train_args: 
     decay_rate: 0.8
@@ -56,7 +56,7 @@ init_train: # parameters for nn training
   preprocess_args:
     preshift: true # shift the descriptor by its mean
     prescale: false # scale the descriptor by its variance (can cause convergence problem)
-    prefit_ridge: 1e1 # do a ridge regression as prefitting
+    prefit_ridge: 10 # do a ridge regression as prefitting
     prefit_trainable: false
   train_args: 
     decay_rate: 0.96 # learning rate decay factor

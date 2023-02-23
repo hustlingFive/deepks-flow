@@ -157,7 +157,7 @@ class RunScfAbacus(OP):
         for f in os.listdir(task_path/"ABACUS"):
             print(f)
             cmd=str(f"ulimit -s unlimited && \
-                . /opt/intel/oneapi/setvars.sh && \
+                export OMP_NUM_THREADS=1 && \
                 cd ABACUS/{f}/ &&  \
                 {run_cmd} -n {cpus_per_task} {abacus_path} > {SCF_OUT_LOG} 2>{SCF_ERR_LOG}  &&  \
                 echo {f}`grep convergence ./OUT.ABACUS/running_scf.log` > conv  &&  \

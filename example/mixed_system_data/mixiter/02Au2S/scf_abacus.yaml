@@ -7,7 +7,7 @@ scf_abacus:
   lattice_constant: 1.88972613 
   lattice_vector: [[5.3471221924, 0, 0], [0, 5.3471221924, 0], [0, 0, 5.3471221924]]
   smearing_sigma: 0.01
-  mixing_type: pulay-kerker
+  mixing_type: pulay
 
 
 init_scf_abacus:
@@ -19,4 +19,4 @@ init_scf_abacus:
   lattice_constant: 1.88972613 
   lattice_vector: [[5.3471221924, 0, 0], [0, 5.3471221924, 0], [0, 0, 5.3471221924]]
   smearing_sigma: 0.01
-  mixing_type: pulay-kerker
+  mixing_type: pulay

@@ -12,8 +12,8 @@ scf_abacus:
   mixing_beta: 0.4
   #cmd args
   run_cmd : "mpirun"
-  abacus_path: "/usr/local/bin/abacus"
-  cpus_per_task: 8
+  abacus_path: "abacus"
+  cpus_per_task: 16
   group_size: 50
 
 # init_scf_abacus.yaml
@@ -29,8 +29,8 @@ init_scf_abacus:
   mixing_beta: 0.4
   #cmd args
   run_cmd : "mpirun"
-  abacus_path: "/usr/local/bin/abacus"
-  cpus_per_task: 8
+  abacus_path: "abacus"
+  cpus_per_task: 16
   group_size: 50
 
 compounds : ["00AgCl","01AlN", '02Au2S', '03BN', '04C', '05CsPbI3', '06Cu3N', '07CuBr','08CuHO', '09GaN', '10InP', '11LiHO', '12LiI', '13MgO', '14PtS']

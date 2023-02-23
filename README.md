@@ -32,7 +32,7 @@ Before you submit the example, you may regist a [Bohrium](https://bohrium.dp.tec
 - `bohrium_account_name`: Input your Bohrium login account.
 - `bohrium_account_password`: Input your Bohrium login password.
 - `upload_python_package`: /path/to/deepks2 and /path/to/deepks which you have just installed.
-- `dflow_config_host` and `dflow_config_s3_endpoint`: Write down your `host` and `s3_endpoint` of argo. See [dflow](https://github.com/deepmodeling/dflow) and [workflow_dp](http://39.106.93.187:32746/help) for recommendation.
+- `dflow_config_host` and `dflow_config_s3_endpoint`: Write down your `host` and `s3_endpoint` of argo. See [dflow](https://github.com/deepmodeling/dflow) and [workflow_dp](https://workflows.deepmodeling.com/workflows) for recommendation.
 
 Now it's time to submit your workflow!
 ```

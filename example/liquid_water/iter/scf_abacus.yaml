@@ -16,7 +16,7 @@ scf_abacus:
   lattice_vector: [[21.16708996, 0, 0], [0, 21.16708996, 0], [0, 0, 21.16708996]]
   #cmd args
   run_cmd : "mpirun"
-  abacus_path: "/root/abacus-develop/build/abacus"
+  abacus_path: "abacus"
 init_scf_abacus:
   orb_files: ["8_O_gga_100Ry_7au_2s2p1d.orb", "1_H_gga_100Ry_7au_2s1p.orb"]
   pp_files: ["O_ONCV_PBE-1.0.upf", "H_ONCV_PBE-1.0.upf"]
@@ -33,4 +33,4 @@ init_scf_abacus:
   lattice_vector: [[21.16708996, 0, 0], [0, 21.16708996, 0], [0, 0, 21.16708996]]
   #cmd args
   run_cmd : "mpirun"
-  abacus_path: "/root/abacus-develop/build/abacus"
+  abacus_path: "abacus"

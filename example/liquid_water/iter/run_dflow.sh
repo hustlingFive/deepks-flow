@@ -1,1 +1,1 @@
-deepks2 iterate params_dflow.yaml systems.yaml scf_abacus.yaml dflow_bohrium_args.yaml
+deepks2 iterate params.yaml systems.yaml scf_abacus.yaml dflow_bohrium_args.yaml

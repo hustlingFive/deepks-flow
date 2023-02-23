@@ -10,32 +10,6 @@ DEFAULT_TRN_MACHINE = {
     "executor": None,
 }
 
-BOHRIUM_SCF_ABACUS_CONVERT = {
-    "extra": {
-        "job_name":"deepks_scf_abacus_convert"
-    }
-}
-BOHRIUM_SCF_ABACUS_PREP = {
-    "extra": {
-        "job_name":"deepks_scf_abacus_prep"
-    }
-}
-BOHRIUM_SCF_ABACUS_RUN = {
-    "extra": {
-        "job_name":"deepks_scf_abacus_run"
-    }
-}
-BOHRIUM_SCF_ABACUS_GATHER = {
-    "extra": {
-        "job_name":"deepks_scf_abacus_gather"
-    }
-}
-BOHRIUM_DEEPKS_TRAIN = {
-    "extra": {
-        "job_name":"deepks_train"
-    }
-}
-
 SCF_ARGS_NAME = "scf_input.yaml"
 SCF_ARGS_NAME_ABACUS="scf_abacus.yaml"   #for abacus, caoyu add 2021-07-26
 INIT_SCF_NAME_ABACUS="init_scf_abacus.yaml"   #for abacus init, caoyu add 2021-12-17
@@ -90,6 +64,8 @@ NAME_TYPE = {   'H': 1, 'He': 2, 'Li': 3, 'Be': 4, 'B': 5, 'C': 6, 'N': 7,
             ## 'Fl': 114, 'Uup': 115, 'Lv': 116, 'Uus': 117, 'Uuo': 118
         } #dict
 TYPE_NAME ={v:k for k, v in NAME_TYPE.items()}
+TYPE_INDEX = {k:v for k, v in NAME_TYPE.items()}
+
 
 ABACUS_CMD="bash run_abacus.sh"
 
@@ -137,5 +113,5 @@ DEFAULT_TRAIN_ARGS = {
    "proj_basis":None
 }
 
-default_image = 'base_dflow_deepks'
+default_image = 'registry.dp.tech/dptech/ubuntu:22.04-py3.10'
 default_host = '127.0.0.1:2746'

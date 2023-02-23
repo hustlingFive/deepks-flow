@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 import numpy as np
 from deepks2.utils.file_utils import load_yaml
-from deepks2.constants import CMODEL_FILE, SYS_TRAIN, SYS_TEST
+from deepks2.constants import CMODEL_FILE, SYS_TRAIN, SYS_TEST, TYPE_INDEX
 
 class ConvertScfAbacus(OP):
 
@@ -78,7 +78,7 @@ class ConvertScfAbacus(OP):
             proj_file = proj_file,
         )
 
-        ConvertScfAbacus.convert_data(**convert_scf_config)
+        ConvertScfAbacus._convert_data(**convert_scf_config)
 
         os.chdir(cwd)
 
@@ -89,7 +89,7 @@ class ConvertScfAbacus(OP):
 
     @staticmethod
     # need parameters: orb_files, pp_files, proj_file
-    def convert_data(systems_train, systems_test=None, *,
+    def _convert_data(systems_train, systems_test=None, *,
                      no_model=True, model_file=None, pp_files=[],
                      lattice_vector=np.eye(3, dtype=int), dispatcher=None, **pre_args):
 
@@ -97,6 +97,17 @@ class ConvertScfAbacus(OP):
         from deepks.utils import load_sys_paths
         from deepks.iterate.generator_abacus import make_abacus_scf_kpt, make_abacus_scf_input, make_abacus_scf_stru
         from deepks2.constants import NAME_TYPE, TYPE_NAME
+        def _coord_to_atom(path):
+            coords = np.load(f"{path}/coord.npy")
+            nframes = coords.shape[0]
+            # get type_map.raw and type.raw, use it
+            with open(f"{path}/type_map.raw") as fp:
+                my_type_map =[TYPE_INDEX[i] for i in fp.read().split()]
+            atom_types = np.loadtxt(f"{path}/type.raw", ndmin=1).astype(int)
+            atom_types = np.array([int(my_type_map[i-1]) for i in atom_types])\
+                .reshape(1,-1).repeat(nframes,axis=0)
+            atom_data = np.insert(coords, 0, values=atom_types, axis=2)
+            return atom_data
 
         # trace a model (if necessary)
         if not no_model:
@@ -121,7 +132,10 @@ class ConvertScfAbacus(OP):
         sys_paths = [os.path.abspath(s) for s in load_sys_paths(systems)]
         # init sys_data (dpdata)
         for i, sset in enumerate(train_sets+test_sets):
-            atom_data = np.load(f"{sys_paths[i]}/atom.npy")
+            try:
+                atom_data = np.load(f"{sys_paths[i]}/atom.npy")
+            except FileNotFoundError:
+                atom_data = _coord_to_atom(sys_paths[i])
             if os.path.isfile(f"{sys_paths[i]}/box.npy"):
                 cell_data = np.load(f"{sys_paths[i]}/box.npy")
             nframes = atom_data.shape[0]

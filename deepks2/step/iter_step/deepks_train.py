@@ -25,7 +25,6 @@ from dflow.python import(
 from deepks2.utils.arg_utils import deep_update
 from deepks2.utils.step_config import normalize as normalize_step_dict
 from deepks2.utils.step_config import init_executor
-from deepks2.constants import (BOHRIUM_DEEPKS_TRAIN)
 import os
 from typing import Set, List
 from pathlib import Path
@@ -132,8 +131,7 @@ def _prep_run_train(
     run_template_config = run_config.pop("template_config")
     assistant_executor = assistant_config.pop("executor")
     run_executor = run_config.pop("executor")
-    run_executor = init_executor(deep_update(
-        run_executor, BOHRIUM_DEEPKS_TRAIN))
+    run_executor = init_executor(run_executor)
     assistant_executor = init_executor(assistant_executor)
 
     prep_train = Step(

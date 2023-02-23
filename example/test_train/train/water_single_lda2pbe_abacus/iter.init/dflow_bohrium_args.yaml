@@ -1,9 +1,7 @@
 # args that must be modified
-bohrium_account_name: &bohrium_account_name "xxx"
-bohrium_account_password: &bohrium_account_password "xxx"
-bohrium_program_id: &bohrium_program_id "xxx"  # this arg should be string type
-dflow_config_host: &dflow_config_host "xxx"
-dflow_config_s3_endpoint: &dflow_config_s3_endpoint "xxx"
+bohrium_account_name: &bohrium_account_name "<bohrium-email>"
+bohrium_account_password: &bohrium_account_password "<bohrium-password>"
+bohrium_program_id: &bohrium_program_id "<bohrium-project-id>"  # this arg should be string type
 upload_python_package : ["/path/to/deepks2",
   "/path/to/deepks"]
 
@@ -18,47 +16,50 @@ default_config:
 
 # scf_machine:
 #   template_config:
-#     image: 'abacus-workshop'
+#     image: 'registry.dp.tech/dptech/abacus:3.1.0'
 #   executor:
-#     type: lebesgue_v2
-#     extra:
-#       scass_type: c16_m32_cpu
-#       machine_type: c16_m32_cpu
-#       platform: ali
-#       program_id: *bohrium_program_id
-#       job_type: indicate # container
-#       region: default
-#       log_file: tmp_log
+#     type: dispatcher
+#     image_pull_policy: IfNotPresent
+#     machine_dict:
+#       batch_type: Bohrium
+#       context_type: Bohrium
+#       remote_profile:
+#         input_data:
+#           job_type: container
+#           platform: ali
+#           scass_type: c16_m32_cpu
 
 train_machine:
   template_config:
     image: 'hustling/base-dflow-deepks:1.0'
   executor:
-    type: lebesgue_v2
-    extra:
-      scass_type: c16_m32_cpu
-      machine_type: c16_m32_cpu
-      platform: ali
-      program_id: *bohrium_program_id
-      job_type: container
-      region: default
-      log_file: tmp_log
+    type: dispatcher
+    image_pull_policy: IfNotPresent
+    machine_dict:
+      batch_type: Bohrium
+      context_type: Bohrium
+      remote_profile:
+        input_data:
+          job_type: container
+          platform: ali
+          scass_type: c16_m32_cpu
 
 # bohrium
-dflow_config:
-  host: *dflow_config_host # xxx
-  s3_endpoint: *dflow_config_s3_endpoint
-  _catalog_file_name: dflow
-lebesgue_context_config:
+bohrium_config:
+  host: "https://workflows.deepmodeling.com"
+  k8s_api_server: "https://workflows.deepmodeling.com"
+  storage_client: dflow.plugins.bohrium.TiefblueClient
+  repo_key: 'oss-bohrium'
   username: *bohrium_account_name
   password: *bohrium_account_password
+  project_id: *bohrium_program_id
+bohrium_context_config:
   executor: mixed
   extra:
     scass_type: c2_m4_cpu
     machine_type: c2_m4_cpu
     program_id: *bohrium_program_id
     job_type: container
-  tag: 'deepks-train-flow'
 
 # other settings (these are default, can be omitted)
 cleanup: false # whether to delete slurm and err files
