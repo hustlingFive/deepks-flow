@@ -93,14 +93,7 @@ def workflow_scf_abacus(systems_train = None, systems_test = None,
 
 
 def submit_scf_abacus(*args, **kwargs):
-    # set global config
-    # from dflow import config, s3_config
-    # dflow_config = kwargs.get('dflow_config', None)
-    # if dflow_config is not None :
-    #     config["host"] = dflow_config.get('host', None)
-    #     s3_config["endpoint"] = dflow_config.get('s3_endpoint', None)
-    #     config["k8s_api_server"] = dflow_config.get('k8s_api_server', None)
-    #     config["token"] = dflow_config.get('token', None)    
+  
     bohrium_config = kwargs.get('bohrium_config', None)
     if bohrium_config is not None:
         bohrium_config_from_dict(bohrium_config)

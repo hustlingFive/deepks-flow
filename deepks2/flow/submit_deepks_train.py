@@ -89,12 +89,6 @@ def workflow_deepks_train(systems_train=None, systems_test=None,
 
 
 def submit_deepks_train(*args, **kwargs):
-    # set global config
-    # from dflow import config, s3_config
-    #     config["host"] = dflow_config.get('host', None)
-    #     s3_config["endpoint"] = dflow_config.get('s3_endpoint', None)
-    #     config["k8s_api_server"] = dflow_config.get('k8s_api_server', None)
-    #     config["token"] = dflow_config.get('token', None)
 
     bohrium_config = kwargs.get('bohrium_config', None)
     if bohrium_config is not None:

@@ -209,6 +209,7 @@ def _scf_abacus(
         with_param=argo_range(
             argo_len(prep_scf_abacus.outputs.parameters["task_names"])),
         key=step_keys["run-scf-abacus"],
+        continue_on_success_ratio=0.9,
         executor=run_executor,
         util_image=assistant_template_config.get("image"),
         **run_config,
